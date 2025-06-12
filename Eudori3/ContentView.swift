@@ -7,30 +7,43 @@
 
 import SwiftUI
 import RealityKit
+import FocusEntity
 
 struct ContentView : View {
+    @State var isPlacementEnabled: Bool = false
+    @State var selectedModel: Model?
+    @State var modelConfirmedForPlacement: Model?
+    
+    private var models: [Model] = {
+        // get dynamically from dir
+        let fileManager = FileManager.default
+        
+        guard let path = Bundle.main.resourcePath, let files = try? fileManager.contentsOfDirectory(atPath: path) else {
+            return []
+        }
+        
+        var availabelModels: [Model] = []
+        for filename in files where
+            filename.hasSuffix("usdz") {
+                let modelName = filename.replacingOccurrences(of: ".usdz", with: "")
+                // implement from class model
+                let model = Model(modelName: modelName)
+                availabelModels.append(model)
+            }
+        
+        return availabelModels
+    }()
 
     var body: some View {
-        RealityView { content in
-
-            // Create a cube model
-            let model = Entity()
-            let mesh = MeshResource.generateBox(size: 0.1, cornerRadius: 0.005)
-            let material = SimpleMaterial(color: .gray, roughness: 0.15, isMetallic: true)
-            model.components.set(ModelComponent(mesh: mesh, materials: [material]))
-            model.position = [0, 0.05, 0]
-
-            // Create horizontal plane anchor for the content
-            let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-            anchor.addChild(model)
-
-            // Add the horizontal plane anchor to the scene
-            content.add(anchor)
-
-            content.camera = .spatialTracking
-
+        ZStack(alignment: .bottom){
+            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+            
+            if self.isPlacementEnabled {
+                PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+            } else {
+                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
+            }
         }
-        .edgesIgnoringSafeArea(.all)
     }
 
 }

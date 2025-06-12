@@ -6,12 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0B6211B22DF93B360047F114 /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = 0B6211B12DF93B360047F114 /* FocusEntity */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0B6211A22DF93AC50047F114 /* Eudori3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eudori3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0B6211A42DF93AC50047F114 /* Eudori3 */ = {
+		0B6211D82DF943840047F114 /* Eudori3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Eudori3;
 			sourceTree = "<group>";
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6211B22DF93B360047F114 /* FocusEntity in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +37,7 @@
 		0B6211992DF93AC50047F114 = {
 			isa = PBXGroup;
 			children = (
-				0B6211A42DF93AC50047F114 /* Eudori3 */,
+				0B6211D82DF943840047F114 /* Eudori3 */,
 				0B6211A32DF93AC50047F114 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,10 +66,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0B6211A42DF93AC50047F114 /* Eudori3 */,
+				0B6211D82DF943840047F114 /* Eudori3 */,
 			);
 			name = Eudori3;
 			packageProductDependencies = (
+				0B6211B12DF93B360047F114 /* FocusEntity */,
 			);
 			productName = Eudori3;
 			productReference = 0B6211A22DF93AC50047F114 /* Eudori3.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 0B6211992DF93AC50047F114;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0B6211B02DF93B360047F114 /* XCRemoteSwiftPackageReference "FocusEntity" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0B6211A32DF93AC50047F114 /* Products */;
 			projectDirPath = "";
@@ -328,6 +337,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0B6211B02DF93B360047F114 /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxxfrazer/FocusEntity.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0B6211B12DF93B360047F114 /* FocusEntity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B6211B02DF93B360047F114 /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			productName = FocusEntity;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B62119A2DF93AC50047F114 /* Project object */;
 }
