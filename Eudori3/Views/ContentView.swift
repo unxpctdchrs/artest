@@ -35,13 +35,15 @@ struct ContentView : View {
     }()
 
     var body: some View {
-        ZStack(alignment: .bottom){
-            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+        ZStack(alignment: .bottomLeading){
+            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement).edgesIgnoringSafeArea(.all)
             
             if self.isPlacementEnabled {
                 PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
             } else {
                 ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
+                
+                ToolsView().padding(10)
             }
         }
     }
