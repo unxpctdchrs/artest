@@ -13,6 +13,8 @@ struct ContentView : View {
     @State var isPlacementEnabled: Bool = false
     @State var selectedModel: Model?
     @State var modelConfirmedForPlacement: Model?
+    @State var isPlacingObject: Bool = false
+    @State var currentLevel: Int = 0
     
     private var models: [Model] = {
         // get dynamically from dir
@@ -36,15 +38,22 @@ struct ContentView : View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading){
-            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement).edgesIgnoringSafeArea(.all)
+            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement, isPlacingObject: self.$isPlacingObject, currentLevel: self.$currentLevel).edgesIgnoringSafeArea(.all)
             
-            if self.isPlacementEnabled {
-                PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
-            } else {
-                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
-                
-                ToolsView().padding(10)
+            Button {
+                self.isPlacingObject = true
+                self.currentLevel = 1
+            } label: {
+                Text("Hello, World!")
             }
+            
+//            if self.isPlacementEnabled {
+//                PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+//            } else {
+//                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
+//                
+//                ToolsView().padding(10)
+//            }
         }
     }
 

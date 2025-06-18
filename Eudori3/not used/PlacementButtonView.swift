@@ -62,3 +62,44 @@ struct PlacementButtonsView: View {
         modelConfirmedForPlacement: $modelConfirmedForPlacement
     )
 }
+
+
+//        guard let model = self.modelConfirmedForPlacement,
+//              let modelEntity = model.modelEntity,
+//              let focusEntity = context.coordinator.focusEntity else {
+//            // If any of these are nil, we can't proceed.
+//            return
+//        }
+//
+//        print("DEBUG: Adding model to scene - \(model.modelName)")
+//
+//        let clonedEntity = modelEntity.clone(recursive: true)
+//        clonedEntity.generateCollisionShapes(recursive: true)
+//        uiView.installGestures([.translation, .rotation, .scale], for: clonedEntity)
+//
+//        let anchorEntity = AnchorEntity()
+//        anchorEntity.transform = focusEntity.transform
+//
+//        anchorEntity.addChild(clonedEntity)
+//        uiView.scene.addAnchor(anchorEntity)
+//
+//        DispatchQueue.main.async {
+//            self.modelConfirmedForPlacement = nil
+//        }
+//
+//        // Example: Attach the capacitor after 3 seconds
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//            if let socketEntity = modelEntity.findEntity(named: "capacitor_socket_1") {
+//
+//                print("Socket 'capacitor_socket_1' found!")
+//
+//                // 3. Attach the capacitor as a child of the socket
+//                // This automatically gives it the correct position and orientation.
+//                if let capacitor = modelEntity.findEntity(named: "capacitor") {
+//                    socketEntity.addChild(capacitor)
+//                }
+//
+//            } else {
+//                print("ERROR: Could not find entity named 'capacitor_socket_1' in the model.")
+//            }
+//        }
