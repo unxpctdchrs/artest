@@ -7,39 +7,48 @@
 
 import Foundation
 import RealityKit
+import Combine
 
 class ARViewModel: ObservableObject {
     @Published var isPlacingObject: Bool = false
-    @Published var currentLevel: Int = 0 {
-        didSet {
-            loadLevel(index: currentLevel)
-        }
-    }
     @Published var focusEntityState: Bool = true
     
-    var activeLevel: Level?
-    weak var arView: ARView?
-    
-    // Add level here
-    private let levels: [Int: Level] = [
-        1: Level1(),
-        2: Level2(),
-    ]
-    
-    // load and activate a new level
-    func loadLevel(index: Int) {
-        // Clean up current level if any
-        if let currentLevel = activeLevel, let arView = self.arView {
-            currentLevel.cleanupLevel(in: arView, arViewModel: self)
+    weak var arView: ARView? {
+        didSet {
+            if let arView = self.arView {
+                print("ARViewModel: ARView assigned. Setting up level cleanup observation.")
+                setupLevelCleanupObservation(for: arView)
+            } else {
+                levelCleanupCancellable?.cancel()
+                levelCleanupCancellable = nil
+            }
         }
+    }
+    
+    @Published var gameManager: GameManager
+    
+    private var levelCleanupCancellable: AnyCancellable?
+    
+    init() {
+        self.gameManager = GameManager()
+    }
+    
+    private func setupLevelCleanupObservation(for arView: ARView) {
+        // Cancel any existing subscription first to prevent duplicates if arView is reassigned
+        levelCleanupCancellable?.cancel()
         
-        // Load the new level
-        if let newLevel = levels[index] {
-            self.activeLevel = newLevel
-        } else {
-            print("ERROR: Level with index \(index) not found.")
-            activeLevel = nil // Clear active level if not found
-        }
+        levelCleanupCancellable = gameManager.$activeLevel
+            .sink { [weak self, weak arView] (newActiveLevel: Level?) in
+                guard let self = self, let arView = arView else { return }
+                
+                // Perform cleanup of the *previous* level when a new one is loaded
+                // This sink will now only trigger after arView has been set.
+                // For simplicity, clearing all anchors. In a real app, track and remove specific entities.
+                if arView.scene.anchors.count > 0 {
+                    print("ARViewModel: Cleaning up previous level's entities in ARView.")
+                    arView.scene.anchors.removeAll()
+                }
+            }
     }
     
     // placing the level
@@ -49,7 +58,7 @@ class ARViewModel: ObservableObject {
             return
         }
         
-        guard let level = activeLevel else {
+        guard let level = gameManager.activeLevel else {
             print("No active level to place.")
             return
         }
@@ -57,20 +66,6 @@ class ARViewModel: ObservableObject {
         _ = level.setupLevel(in: arView, with: transform, arViewModel: self)
         DispatchQueue.main.async {
             self.focusEntityState = false
-        }
-    }
-    
-    func performUpdate(deltaTime: Double) {
-        activeLevel?.update(deltaTime: deltaTime, arViewModel: self)
-    }
-    
-    func goToNextLevel() {
-        let nextIndex = currentLevel + 1
-        if levels[nextIndex] != nil {
-            currentLevel = nextIndex
-        } else {
-            print("No more levels or reached max level. Looping back to Level 1.")
-            currentLevel = 1
         }
     }
 }

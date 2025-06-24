@@ -16,7 +16,7 @@ struct ContentView : View {
             
             Button {
                 arViewModel.isPlacingObject = true
-                arViewModel.currentLevel = 1
+                arViewModel.gameManager.currentLevel = 1
             } label: {
                 Text("Hello, World!")
             }
@@ -27,7 +27,7 @@ struct ContentView : View {
                     ToolsView()
                     Spacer()
                     Button {
-                        arViewModel.goToNextLevel()
+                        arViewModel.gameManager.goToNextLevel()
                     } label: {
                         Text("GO TO NEXT LEVEL")
                     }

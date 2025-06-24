@@ -26,7 +26,7 @@ struct ARViewContainer: UIViewRepresentable {
         
         // This function is called on every frame by the subscription.
         func onUpdate(event: SceneEvents.Update) {
-            arViewModel.performUpdate(deltaTime: Double(event.deltaTime))
+            arViewModel.gameManager.performUpdate(deltaTime: Double(event.deltaTime), arViewModel: arViewModel)
             
             if arViewModel.focusEntityState == false {
                 focusEntity?.isEnabled = false
@@ -86,11 +86,11 @@ struct ARViewContainer: UIViewRepresentable {
                 }
                 print("currently tracking a surface")
                 
-                if arViewModel.currentLevel == 1 {
+                if arViewModel.gameManager.currentLevel == 1 {
                     arViewModel.placeCurrentLevel(transform: focusEntity.transform)
                 }
                 
-                if arViewModel.currentLevel == 2 {
+                if arViewModel.gameManager.currentLevel == 2 {
                     print("currentLevel is 2")
                     arViewModel.placeCurrentLevel(transform: focusEntity.transform)
                 }
