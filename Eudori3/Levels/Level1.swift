@@ -9,7 +9,11 @@ import Foundation
 import RealityKit
 
 class Level1: Level {
-    let id: Int = 1
+    func getCapacitor() -> Entity? {
+        return Entity()
+    }
+    
+    let id: Int = 2
     
     var model: Model
     var lamp: [ModelEntity] = []
@@ -66,7 +70,7 @@ class Level1: Level {
         }
     }
     
-    func update(deltaTime: Double, arViewModel: ARViewModel) {
+    func update(deltaTime: Double, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
         guard level1IsActive else { return }
         
         if isCapacitorAttached {

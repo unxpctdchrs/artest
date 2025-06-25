@@ -10,5 +10,15 @@ import SwiftUI
 class ToolsViewModel: ObservableObject {
     @Published var isMagnifyingGlassActive: Bool = false
     @Published var isMultimeterActive: Bool = false
-    @Published var isThermalGlassActive: Bool = false
+    @Published var isThermalGlassActive: Bool = false {
+        didSet {
+            print("isThermalGlassActive changed to: \(isThermalGlassActive)")
+        }
+    }
+    
+    var gameManager: GameManager
+    
+    init(gameManager: GameManager) {
+        self.gameManager = gameManager
+    }
 }

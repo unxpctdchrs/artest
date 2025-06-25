@@ -9,7 +9,11 @@ import RealityKit
 import Foundation
 
 class Level2: Level {
-    var id: Int = 2
+    func getCapacitor() -> Entity? {
+        return Entity()
+    }
+    
+    var id: Int = 3
     
     var model: Model
     
@@ -40,7 +44,7 @@ class Level2: Level {
         }
     }
     
-    func update(deltaTime: Double, arViewModel: ARViewModel) {
+    func update(deltaTime: Double, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
         guard level2IsActive else { return }
         
         print("level 2 update")

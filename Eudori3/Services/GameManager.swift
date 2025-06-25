@@ -8,6 +8,7 @@
 import Foundation
 import RealityKit
 import Combine
+import SwiftUICore
 
 class GameManager: ObservableObject {
     @Published var currentLevel: Int = 0 {
@@ -20,8 +21,8 @@ class GameManager: ObservableObject {
     
     // Add level here
     private let levels: [Int: Level] = [
-        1: Level1(),
-        2: Level2(),
+        1: LevelTutorial(),
+        2: Level1(),
     ]
     
     // load and activate a new level
@@ -34,8 +35,8 @@ class GameManager: ObservableObject {
         }
     }
     
-    func performUpdate(deltaTime: Double, arViewModel: ARViewModel) {
-        activeLevel?.update(deltaTime: deltaTime, arViewModel: arViewModel)
+    func performUpdate(deltaTime: Double, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
+        activeLevel?.update(deltaTime: deltaTime, arViewModel: arViewModel, toolsViewModel: toolsViewModel)
     }
     
     func goToNextLevel() {

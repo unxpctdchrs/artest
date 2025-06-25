@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ToolsView: View {
-    @StateObject var toolsViewModel = ToolsViewModel()
+    @ObservedObject var toolsViewModel: ToolsViewModel
     
     var body: some View {
         HStack {
@@ -48,5 +48,5 @@ struct ToolsView: View {
 }
 
 #Preview {
-    ToolsView()
+    ToolsView(toolsViewModel: ToolsViewModel(gameManager: GameManager()))
 }
