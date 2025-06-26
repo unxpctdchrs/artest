@@ -14,9 +14,22 @@
 		0B6211A22DF93AC50047F114 /* Eudori3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eudori3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		50A50D082E0C4EB9004A147B /* Exceptions for "Eudori3" folder in "Eudori3" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0B6211A12DF93AC50047F114 /* Eudori3 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0B6211D82DF943840047F114 /* Eudori3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				50A50D082E0C4EB9004A147B /* Exceptions for "Eudori3" folder in "Eudori3" target */,
+			);
 			path = Eudori3;
 			sourceTree = "<group>";
 		};
@@ -92,11 +105,11 @@
 				};
 			};
 			buildConfigurationList = 0B62119D2DF93AC50047F114 /* Build configuration list for PBXProject "Eudori3" */;
-			developmentRegion = en;
+			developmentRegion = id;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				id,
 			);
 			mainGroup = 0B6211992DF93AC50047F114;
 			minimizedProjectReferenceProxies = 1;
@@ -262,10 +275,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QMCXKKF33C;
+				DEVELOPMENT_TEAM = W49WD92TK5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_FILE = Eudori3/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lloyd: Electrofix Journey";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Untuk menampilkan komponen 3D di lingkungan anda menggunakan Augmented Reality.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -291,10 +307,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QMCXKKF33C;
+				DEVELOPMENT_TEAM = W49WD92TK5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_FILE = Eudori3/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lloyd: Electrofix Journey";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Untuk menampilkan komponen 3D di lingkungan anda menggunakan Augmented Reality.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
