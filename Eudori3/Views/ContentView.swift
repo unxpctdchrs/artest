@@ -40,8 +40,10 @@ struct ContentView : View {
                     currentStep = .arExperience
                 }
             case .arExperience:
-                ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
-                    .edgesIgnoringSafeArea(.all)
+                CameraPermissionView {
+                    ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
+                        .edgesIgnoringSafeArea(.all)
+                }
                 
                 if showControls {
                     ControlView(
