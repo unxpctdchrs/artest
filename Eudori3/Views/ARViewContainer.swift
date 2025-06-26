@@ -13,21 +13,27 @@ import Combine
 
 struct ARViewContainer: UIViewRepresentable {
     
-    @ObservedObject var arViewModel = ARViewModel()
+//<<<<<<< HEAD
+//    @ObservedObject var arViewModel = ARViewModel()
+//=======
+    @ObservedObject var arViewModel: ARViewModel
+//>>>>>>> dev
     @ObservedObject var toolsViewModel: ToolsViewModel
     
     class Coordinator {
         var arViewModel: ARViewModel
+        var toolsViewModel: ToolsViewModel
         var focusEntity: FocusEntity?
         var updateSubscription: Cancellable?
         
-        init(arViewModel: ARViewModel) {
+        init(arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
             self.arViewModel = arViewModel
+            self.toolsViewModel = toolsViewModel
         }
         
         // This function is called on every frame by the subscription.
         func onUpdate(event: SceneEvents.Update) {
-            arViewModel.gameManager.performUpdate(deltaTime: Double(event.deltaTime), arViewModel: arViewModel)
+            arViewModel.gameManager.performUpdate(deltaTime: Double(event.deltaTime), arViewModel: arViewModel, toolsViewModel: toolsViewModel)
             
             if arViewModel.focusEntityState == false {
                 focusEntity?.isEnabled = false
@@ -36,7 +42,7 @@ struct ARViewContainer: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(arViewModel: arViewModel)
+        return Coordinator(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
     }
     
     func makeUIView(context: Context) -> ARView {
@@ -90,13 +96,18 @@ struct ARViewContainer: UIViewRepresentable {
                 }
                 print("currently tracking a surface")
                 
-                if arViewModel.gameManager.currentLevel == 1 {
+//<<<<<<< HEAD
+//                if arViewModel.gameManager.currentLevel == 1 {
+//                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
+//                }
+//                
+//                if arViewModel.gameManager.currentLevel == 2 {
+//                    print("currentLevel is 2")
+//                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
+//=======
+                if arViewModel.gameManager.currentLevel > 0 {
                     arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
-                }
-                
-                if arViewModel.gameManager.currentLevel == 2 {
-                    print("currentLevel is 2")
-                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
+//>>>>>>> dev
                 }
 
             default:

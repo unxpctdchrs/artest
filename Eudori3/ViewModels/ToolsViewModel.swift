@@ -9,9 +9,19 @@ import SwiftUI
 import RealityKit
 
 class ToolsViewModel: ObservableObject {
-
+    
     @Published var isMagnifyingGlassActive: Bool = false
-    @Published var isThermalGlassActive: Bool = false
+    @Published var isThermalGlassActive: Bool = false {
+        didSet {
+            print("isThermalGlassActive changed to: \(isThermalGlassActive)")
+        }
+    }
+    
+    var gameManager: GameManager
+    
+    init(gameManager: GameManager) {
+        self.gameManager = gameManager
+    }
     
     @Published var focusProgress: Double = 0.0
     @Published var focusedEntityName: String = ""
@@ -19,17 +29,17 @@ class ToolsViewModel: ObservableObject {
     
     private var multimeterManager: MultimeterManager?
     @Published var isMultimeterActive: Bool = false {
-            didSet {
-                if isMultimeterActive {
-                    multimeterManager?.activate()
-                } else {
-                    multimeterManager?.deactivate()
-                    focusProgress = 0
-                    isFocusing = false
-                    focusedEntityName = ""
-                }
+        didSet {
+            if isMultimeterActive {
+                multimeterManager?.activate()
+            } else {
+                multimeterManager?.deactivate()
+                focusProgress = 0
+                isFocusing = false
+                focusedEntityName = ""
             }
         }
+    }
     
     func setARView(_ arView: ARView) {
         print("Multimeter status on setARView toolsVM: \(isMultimeterActive)")

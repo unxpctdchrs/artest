@@ -29,8 +29,8 @@ class ARViewModel: ObservableObject {
     
     private var levelCleanupCancellable: AnyCancellable?
     
-    init() {
-        self.gameManager = GameManager()
+    init(gameManager: GameManager) {
+        self.gameManager = gameManager
     }
     
     private func setupLevelCleanupObservation(for arView: ARView) {

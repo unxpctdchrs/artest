@@ -8,25 +8,58 @@
 import SwiftUI
 
 struct ContentView : View {
-    @StateObject var arViewModel = ARViewModel()
-    @StateObject var toolsViewModel = ToolsViewModel()
+//<<<<<<< HEAD
+//    @StateObject var arViewModel = ARViewModel()
+//    @StateObject var toolsViewModel = ToolsViewModel()
 //    @StateObject var multimeterViewModel = MultimeterViewModel()
-
+//
+//    var body: some View {
+//        ZStack(alignment: .center){
+//=======
+    @StateObject var gameManager: GameManager
+    
+    @StateObject var arViewModel: ARViewModel
+    @StateObject var toolsViewModel: ToolsViewModel
+    
+    @State var showbuttonstate = true
+    
+    init() {
+        let gameManager = GameManager()
+        
+        _gameManager = StateObject(wrappedValue: gameManager)
+        _arViewModel = StateObject(wrappedValue: ARViewModel(gameManager: gameManager))
+        _toolsViewModel = StateObject(wrappedValue: ToolsViewModel(gameManager: gameManager))
+    }
+    
     var body: some View {
-        ZStack(alignment: .center){
+        ZStack(alignment: .center) {
+//>>>>>>> dev
             ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel).edgesIgnoringSafeArea(.all)
             
-            Button {
-                arViewModel.isPlacingObject = true
-                arViewModel.gameManager.currentLevel = 1
-            } label: {
-                Text("Hello, World!")
+            if (toolsViewModel.isThermalGlassActive) {
+                ThermalVision().edgesIgnoringSafeArea(.all)
+            }
+            
+            if (showbuttonstate) {
+                Button {
+                    arViewModel.isPlacingObject = true
+                    arViewModel.gameManager.currentLevel = 1
+                    showbuttonstate = false
+                } label: {
+                    Text("Hello, World!")
+                }
             }
             
             VStack {
                 Spacer()
                 HStack {
-                    ToolsView(toolsViewModel: toolsViewModel)
+//<<<<<<< HEAD
+//                    ToolsView(toolsViewModel: toolsViewModel)
+//=======
+                    VStack {
+                        ToolsView(toolsViewModel: toolsViewModel)
+                    }
+//>>>>>>> dev
                     Spacer()
                     Button {
                         arViewModel.gameManager.goToNextLevel()
