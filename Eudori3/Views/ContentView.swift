@@ -14,6 +14,11 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
+    @State private var currentStep: AppStep = .onboarding
+    @State private var showControls = true
+    @State private var showChecklist = false
+    @State private var showGuide = false
+    
     init() {
         let gameManager = GameManager()
         
@@ -23,34 +28,63 @@ struct ContentView : View {
     }
     
     var body: some View {
-        ZStack(alignment: .center) {
-            ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel).edgesIgnoringSafeArea(.all)
-            
-            if (toolsViewModel.isThermalGlassActive) {
-                ThermalVision().edgesIgnoringSafeArea(.all)
-            }
-            
-            if (showbuttonstate) {
-                Button {
-                    arViewModel.isPlacingObject = true
-                    arViewModel.gameManager.currentLevel = 1
-                    showbuttonstate = false
-                } label: {
-                    Text("Hello, World!")
+        ZStack {
+            switch currentStep {
+            case .onboarding:
+                OnboardingView {
+                    currentStep = .prologue
                 }
-            }
-            
-            VStack {
-                Spacer()
-                HStack {
-                    VStack {
-                        ToolsView(toolsViewModel: toolsViewModel)
+            case .prologue:
+                PrologueView {
+                    currentStep = .arExperience
+                }
+            case .arExperience:
+                CameraPermissionView {
+                    ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
+                        .edgesIgnoringSafeArea(.all)
+                }
+                
+                if showControls {
+                    ControlView(
+                        onChecklistTapped: { showChecklist = true },
+                        onGuideTapped: { showGuide = true }
+                    )
+                    .transition(.opacity)
+                }
+                
+                if showChecklist {
+                    ChecklistView {
+                        showChecklist = false
                     }
-                    Spacer()
+                    .transition(.scale)
+                }
+                
+                if showGuide {
+                    GuideView {
+                        showGuide = false
+                    }
+                    .transition(.scale)
+                }
+                
+                if (showbuttonstate) {
                     Button {
-                        arViewModel.gameManager.goToNextLevel()
+                        arViewModel.isPlacingObject = true
+                        arViewModel.gameManager.currentLevel = 1
+                        showbuttonstate = false
                     } label: {
-                        Text("GO TO NEXT LEVEL")
+                        Text("Hello, World!")
+                    }
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            arViewModel.gameManager.goToNextLevel()
+                        } label: {
+                            Text("GO TO NEXT LEVEL")
+                        }
                     }
                 }
             }
@@ -63,7 +97,15 @@ struct ContentView : View {
 //                Text("Tool: \(toolsViewModel.activeToolID ?? "nil")")
 //            }
         }
+        .animation(.easeInOut, value: showGuide)
+        .animation(.easeInOut, value: showChecklist)
     }
+}
+
+enum AppStep {
+    case onboarding
+    case prologue
+    case arExperience
 }
 
 #Preview {
