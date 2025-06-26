@@ -28,7 +28,7 @@ struct ChecklistView: View {
                 Image("ChecklistPage")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: geometry.size.width * 0.9)
+                    .frame(width: geometry.size.width * 0.95)
                     .zIndex(1)
                 
                 VStack(alignment: .leading, spacing: 24) {
@@ -51,6 +51,7 @@ struct ChecklistView: View {
                         print("Polaritas: \(selectedPolarity ?? "-")")
                         print("Kapasitansi: \(selectedCapacitance ?? "-")")
                         onDismiss()
+                        print("\(geometry.size.width*0.9)")
                     }
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -106,7 +107,7 @@ struct ChecklistView: View {
                             .foregroundColor(.black)
                             .background(
                                 RoundedRectangle(cornerRadius: 50)
-                                    .fill(Color.white.opacity(0.05)) // subtle tint
+                                    .fill(Color.white.opacity(0.05))
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 50)

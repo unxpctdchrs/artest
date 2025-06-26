@@ -13,7 +13,7 @@ struct ControlView: View {
     var progress: CGFloat = 0.3
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: 16) {
+        VStack(alignment: .trailing) {
             // Top Bar
             HStack {
                 Spacer()
