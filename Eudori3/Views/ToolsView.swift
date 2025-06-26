@@ -49,12 +49,6 @@ struct ToolsView: View {
     }
 }
 
-//<<<<<<< HEAD
-//#Preview {
-//    ToolsView()
-//}
-//=======
 #Preview {
     ToolsView(toolsViewModel: ToolsViewModel(gameManager: GameManager()))
 }
-//>>>>>>> dev

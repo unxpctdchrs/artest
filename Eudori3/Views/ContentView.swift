@@ -8,16 +8,7 @@
 import SwiftUI
 
 struct ContentView : View {
-//<<<<<<< HEAD
-//    @StateObject var arViewModel = ARViewModel()
-//    @StateObject var toolsViewModel = ToolsViewModel()
-//    @StateObject var multimeterViewModel = MultimeterViewModel()
-//
-//    var body: some View {
-//        ZStack(alignment: .center){
-//=======
     @StateObject var gameManager: GameManager
-    
     @StateObject var arViewModel: ARViewModel
     @StateObject var toolsViewModel: ToolsViewModel
     
@@ -33,7 +24,6 @@ struct ContentView : View {
     
     var body: some View {
         ZStack(alignment: .center) {
-//>>>>>>> dev
             ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel).edgesIgnoringSafeArea(.all)
             
             if (toolsViewModel.isThermalGlassActive) {
@@ -53,13 +43,9 @@ struct ContentView : View {
             VStack {
                 Spacer()
                 HStack {
-//<<<<<<< HEAD
-//                    ToolsView(toolsViewModel: toolsViewModel)
-//=======
                     VStack {
                         ToolsView(toolsViewModel: toolsViewModel)
                     }
-//>>>>>>> dev
                     Spacer()
                     Button {
                         arViewModel.gameManager.goToNextLevel()
