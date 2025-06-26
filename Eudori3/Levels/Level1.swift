@@ -7,6 +7,7 @@
 
 import Foundation
 import RealityKit
+import UIKit
 
 class Level1: Level {
     let id: Int = 1
@@ -19,30 +20,53 @@ class Level1: Level {
     private var attachmentTimer: Double = 0.0
     private let attachmentDelay: Double = 3.0
     
+    private var hasShownFloatingText = false
+    private var toolsViewModel: ToolsViewModel?
+    private var floatingTextEntity: ModelEntity?
+    
     init() {
         self.model = Model()
     }
     
-    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel) {
-        guard let circuit = try? Entity.load(named: "testboard_6"), let capacitor = try? ModelEntity.loadModel(named: "capacitor_1.usdz") else {
+    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
+        guard let circuit = try? Entity.load(named: "testboard_6"), let capacitor = try? ModelEntity.loadModel(named: "capacitor_1.usdz"), let multimeter = try? ModelEntity.loadModel(named: "multimeter.usdz") else {
             print("Failed to load models in level1.")
             return
         }
+        self.toolsViewModel = toolsViewModel
         
         self.model.circuitEntity = circuit
         self.model.capacitorEntity = capacitor
+        self.model.multimeter = multimeter
         
+        capacitor.name = "Capacitor"
+        capacitor.components.set(CapacitanceComponent(value: "100 μF"))
         circuit.generateCollisionShapes(recursive: true)
         capacitor.generateCollisionShapes(recursive: true)
+        multimeter.generateCollisionShapes(recursive: true)
         arView.installGestures([.translation, .rotation], for: capacitor)
+//        arView.installGestur([.translation, .rotation], for: multimeter)
+        
+        // Register tap gesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        arView.addGestureRecognizer(tapGesture)
 
         let anchor = AnchorEntity()
         anchor.transform = anchorTransform
         anchor.addChild(circuit)
         
         capacitor.position.x = 0.1
+        multimeter.position.x = 0.7
+        
+        let label = createFloatingText("Kapasitansi: 100 μF")
+        
+        label.position = [multimeter.position.x + 0.5, 0.0, 0.0]
+        print("multimeter extents y:", label.visualBounds(relativeTo: nil).extents.y)
+//        anchor.addChild(label)
+        multimeter.addChild(label)
         
         anchor.addChild(capacitor)
+        anchor.addChild(multimeter)
         
         for i in 1...5 {
             if let socketEntity = circuit.findEntity(named: "line_path\(i)") {
@@ -57,7 +81,7 @@ class Level1: Level {
             }
         }
         
-        arView.scene.addAnchor(anchor)
+        arView.scene.anchors.append(anchor)
         
         DispatchQueue.main.async {
             arViewModel.focusEntityState = false
@@ -68,6 +92,31 @@ class Level1: Level {
     
     func update(deltaTime: Double, arViewModel: ARViewModel) {
         guard level1IsActive else { return }
+        guard let toolsViewModel = self.toolsViewModel,
+              let multimeter = self.model.multimeter,
+              let arView = arViewModel.arView,
+              let anchor = arView.scene.anchors.first
+        else { return }
+
+        // Syarat untuk tampilkan floatingText
+        if toolsViewModel.isMultimeterActive && toolsViewModel.isFocusing {
+            print("MASUK")
+            if floatingTextEntity == nil && !toolsViewModel.focusedEntityName.isEmpty {
+                print("COMING IN")
+                let label = createFloatingText("100 μF")
+//                let worldPosition = multimeter.convert(position: .zero, to: nil)
+                label.position = [multimeter.position.x - 0.1, multimeter.position.y + 0.1, multimeter.position.z - 0.15]
+//                label.position = [0.1, 0.1, 0] // relatif ke multimeter (naik 5 cm)
+                anchor.addChild(label)
+                floatingTextEntity = label
+            }
+            floatingTextEntity?.isEnabled = true
+        } else if(!toolsViewModel.isMultimeterActive) {
+                floatingTextEntity?.removeFromParent()
+                floatingTextEntity?.isEnabled = false
+                floatingTextEntity = nil
+            }
+        
         
         if isCapacitorAttached {
             animateLamp()
@@ -139,7 +188,7 @@ class Level1: Level {
         // For now, it's local to ensure a fresh start
 
         if isAnimatingFlag { // Assume isAnimatingFlag is a property of 'self'
-            print("Animation already active, not starting new one.")
+//            print("Animation already active, not starting new one.")
             return
         }
         isAnimatingFlag = true // Set to true when starting
@@ -215,4 +264,45 @@ class Level1: Level {
         }
     }
     
+    func createFloatingText(_ text: String) -> ModelEntity {
+        let mesh = MeshResource.generateText(
+            text,
+            extrusionDepth: 0.01,
+            font: .systemFont(ofSize: 0.1),
+            containerFrame: .zero,
+            alignment: .center,
+            lineBreakMode: .byWordWrapping
+        )
+        
+        let material = SimpleMaterial(color: .yellow, isMetallic: false)
+        let entity = ModelEntity(mesh: mesh, materials: [material])
+        entity.name = "FloatingText"
+//        entity.components.set(BillboardComponent(worldFacing: .camera))
+        return entity
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        guard let arView = sender.view as? ARView else { return }
+
+        let location = sender.location(in: arView)
+
+        guard let tappedEntity = arView.entity(at: location),
+              let multimeter = model.multimeter else { return }
+
+        if isDescendant(of: multimeter, tappedEntity: tappedEntity) {
+            print("✅ Multimeter tapped")
+            toolsViewModel?.isMultimeterActive.toggle()
+        }
+    }
+    func isDescendant(of parent: Entity?, tappedEntity: Entity) -> Bool {
+        var current: Entity? = tappedEntity
+        while let c = current {
+            if c == parent {
+                return true
+            }
+            current = c.parent
+        }
+        return false
+    }
+
 }

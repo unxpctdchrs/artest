@@ -14,6 +14,7 @@ import Combine
 struct ARViewContainer: UIViewRepresentable {
     
     @ObservedObject var arViewModel = ARViewModel()
+    @ObservedObject var toolsViewModel: ToolsViewModel
     
     class Coordinator {
         var arViewModel: ARViewModel
@@ -69,6 +70,9 @@ struct ARViewContainer: UIViewRepresentable {
         // Add FocusEntity
         context.coordinator.focusEntity = FocusEntity(on: arView, style: .classic(color: .red))
 
+        //set ARView for multimeter tool
+        toolsViewModel.setARView(arView)
+        
         return arView
     }
     
@@ -87,12 +91,12 @@ struct ARViewContainer: UIViewRepresentable {
                 print("currently tracking a surface")
                 
                 if arViewModel.gameManager.currentLevel == 1 {
-                    arViewModel.placeCurrentLevel(transform: focusEntity.transform)
+                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
                 }
                 
                 if arViewModel.gameManager.currentLevel == 2 {
                     print("currentLevel is 2")
-                    arViewModel.placeCurrentLevel(transform: focusEntity.transform)
+                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
                 }
 
             default:

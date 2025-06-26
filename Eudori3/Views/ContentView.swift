@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView : View {
     @StateObject var arViewModel = ARViewModel()
+    @StateObject var toolsViewModel = ToolsViewModel()
+//    @StateObject var multimeterViewModel = MultimeterViewModel()
 
     var body: some View {
         ZStack(alignment: .center){
-            ARViewContainer(arViewModel: arViewModel).edgesIgnoringSafeArea(.all)
+            ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel).edgesIgnoringSafeArea(.all)
             
             Button {
                 arViewModel.isPlacingObject = true
@@ -24,7 +26,7 @@ struct ContentView : View {
             VStack {
                 Spacer()
                 HStack {
-                    ToolsView()
+                    ToolsView(toolsViewModel: toolsViewModel)
                     Spacer()
                     Button {
                         arViewModel.gameManager.goToNextLevel()
@@ -33,6 +35,14 @@ struct ContentView : View {
                     }
                 }
             }
+            if toolsViewModel.isMultimeterActive {
+                MultimeterToolView(viewModel: toolsViewModel)
+            }
+//            if toolsViewModel.activeToolID == "multimeter" {
+//                MultimeterToolView()
+//            } else {
+//                Text("Tool: \(toolsViewModel.activeToolID ?? "nil")")
+//            }
         }
     }
 }
