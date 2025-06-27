@@ -16,10 +16,35 @@ struct ControlView: View {
         VStack(alignment: .trailing) {
             // Top Bar
             HStack {
+                HStack(spacing: 12) {
+                    Text("Reputasi Toko")
+                        .foregroundColor(Color.white)
+                        .font(.custom("Nunito-SemiBold", size: 20))
+                        .padding(.trailing, 12)
+                    
+                    // Thumbs Row
+                    ForEach(0..<3) { _ in
+                        ZStack {
+                            Circle()
+                                .fill(Color("ThumbsBg"))
+                                .frame(width: 35, height: 35)
+                            
+                            Image(systemName: "hand.thumbsup.fill")
+                                .foregroundColor(Color("Thumbs"))
+                        }
+                    }
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(Color("Main"))
+                .cornerRadius(6)
+                .padding(.leading, 12)
+                
                 Spacer()
+                
                 Image(systemName: "dollarsign.bank.building")
                     .font(.system(size: 36, weight: .bold))
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color("Main"))
 
                 ZStack(alignment: .leading) {
                     Image("ProgressBar")
@@ -32,32 +57,6 @@ struct ControlView: View {
                         .frame(width: 280 * progress, height: 40)
                         .padding(.leading, 30)
                 }
-            }
-            
-            // Thumbs Row
-            HStack {
-                Spacer()
-                ZStack {
-                    Image("ReputationBar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 40)
-                    
-                    HStack(spacing: 12) {
-                        ForEach(0..<3) { _ in
-                            ZStack {
-                                Circle()
-                                    .fill(Color("ThumbsBg"))
-                                    .frame(width: 35, height: 35)
-                                
-                                Image(systemName: "hand.thumbsup.fill")
-                                    .foregroundColor(Color("Thumbs"))
-                            }
-                        }
-                    }
-                    .padding(.trailing)
-                }
-                .padding(.trailing, 125)
             }
 
             // Spacer to push buttons down
