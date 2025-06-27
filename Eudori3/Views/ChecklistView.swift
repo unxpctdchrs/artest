@@ -51,7 +51,6 @@ struct ChecklistView: View {
                         print("Polaritas: \(selectedPolarity ?? "-")")
                         print("Kapasitansi: \(selectedCapacitance ?? "-")")
                         onDismiss()
-                        print("\(geometry.size.width*0.9)")
                     }
                     .font(.headline)
                     .frame(maxWidth: .infinity)

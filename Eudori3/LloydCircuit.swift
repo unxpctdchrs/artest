@@ -12,7 +12,7 @@ import SwiftUI
 struct LloydCircuit: App {
     var body: some Scene {
         WindowGroup {
-            StartScreen()
+            ContentView()
         }
     }
 }
