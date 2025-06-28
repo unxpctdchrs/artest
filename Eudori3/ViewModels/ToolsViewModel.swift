@@ -16,6 +16,9 @@ class ToolsViewModel: ObservableObject {
             print("isThermalGlassActive changed to: \(isThermalGlassActive)")
         }
     }
+    @Published var firstFocusedEntity: Entity?
+    @Published var secondFocusedEntity: Entity?
+    @Published var isProbeEntityActive: Bool = false
     
     var gameManager: GameManager
     
@@ -27,16 +30,23 @@ class ToolsViewModel: ObservableObject {
     @Published var focusedEntityName: String = ""
     @Published var isFocusing: Bool = false
     
+    @Published var isProbePlusActive = false
+    @Published var isProbeMinusActive = false
+    
     private var multimeterManager: MultimeterManager?
     @Published var isMultimeterActive: Bool = false {
         didSet {
             if isMultimeterActive {
+                isProbeEntityActive.toggle()
                 multimeterManager?.activate()
             } else {
+                isProbeEntityActive.toggle()
                 multimeterManager?.deactivate()
                 focusProgress = 0
                 isFocusing = false
                 focusedEntityName = ""
+                isProbePlusActive = false
+                isProbeMinusActive = false
             }
         }
     }
@@ -46,12 +56,29 @@ class ToolsViewModel: ObservableObject {
         multimeterManager = MultimeterManager(arView: arView)
         multimeterManager?.onFocusDetected = { [weak self] entity in
             DispatchQueue.main.async {
-                if let cap = entity.components[CapacitanceComponent.self] as? CapacitanceComponent {
-                    self?.focusedEntityName = "\(entity.name): \(cap.value)"
-                } else {
-                    self?.focusedEntityName = entity.name
+//                if( entity.name.hasPrefix("probe_plus")) {
+//                    self?.isProbePlusActive.toggle()
+//                }
+//                if entity.name.hasPrefix( "probe_minus" ) {
+//                    self?.isProbeMinusActive.toggle()
+//                }
+                if(self?.isProbePlusActive == true && self?.isProbeMinusActive == true) {
+                    if let cap = entity.components[CapacitanceComponent.self] as? CapacitanceComponent {
+                        self?.focusedEntityName = "\(entity.name): \(cap.value)"
+                    } else {
+                        self?.focusedEntityName = entity.name
+                    }
                 }
                 self?.isFocusing = true
+            }
+        }
+        multimeterManager?.onFocusProbeType = { [weak self] probeType in
+            DispatchQueue.main.async {
+                if( probeType == "probe_plus" ) {
+                    self?.isProbePlusActive = true
+                } else {
+                    self?.isProbeMinusActive = true
+                }
             }
         }
         

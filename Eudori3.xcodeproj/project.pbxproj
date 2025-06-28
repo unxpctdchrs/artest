@@ -14,9 +14,22 @@
 		0B6211A22DF93AC50047F114 /* Eudori3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eudori3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		095E5E2B2E0D011400818402 /* Exceptions for "Eudori3" folder in "Eudori3" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0B6211A12DF93AC50047F114 /* Eudori3 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0B6211D82DF943840047F114 /* Eudori3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				095E5E2B2E0D011400818402 /* Exceptions for "Eudori3" folder in "Eudori3" target */,
+			);
 			path = Eudori3;
 			sourceTree = "<group>";
 		};
