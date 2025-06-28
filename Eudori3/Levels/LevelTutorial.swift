@@ -19,7 +19,7 @@ class LevelTutorial: Level {
         self.model = Model()
     }
     
-    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel) {
+    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
         guard let circuit = try? Entity.load(named: "tutorial_circuit") else {
             print("Error loading model")
             return

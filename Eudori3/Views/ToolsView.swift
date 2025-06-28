@@ -22,19 +22,21 @@ struct ToolsView: View {
             Spacer()
             
             Button {
+//                toolsViewModel.toggleTool(id: "multimeter")
                 toolsViewModel.isMultimeterActive.toggle()
             } label: {
                 Image(systemName: "appletvremote.gen2")
+//                    .foregroundStyle(toolsViewModel.activeToolID == "multimeter" ? .green : .gray)
                     .foregroundStyle(toolsViewModel.isMultimeterActive ? .green : .gray)
             }
             
             Spacer()
             
             Button {
-                toolsViewModel.isThermalGlassActive.toggle()
+//                toolsViewModel.toggleTool(id: "thermal")
             } label: {
                 Image(systemName: "sunglasses")
-                    .foregroundStyle(toolsViewModel.isThermalGlassActive ? .green : .gray)
+//                    .foregroundStyle(toolsViewModel.activeToolID == "thermal" ? .green : .gray)
             }
             
         }
