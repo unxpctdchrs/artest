@@ -16,6 +16,7 @@ struct ControlView: View {
         VStack(alignment: .trailing) {
             // Top Bar
             HStack {
+                // Reputation Bar
                 HStack(spacing: 12) {
                     Text("Reputasi Toko")
                         .foregroundColor(Color.white)
@@ -42,6 +43,7 @@ struct ControlView: View {
                 
                 Spacer()
                 
+                // Debt Bar
                 Image(systemName: "dollarsign.bank.building")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundColor(Color("Main"))
@@ -62,13 +64,14 @@ struct ControlView: View {
             // Spacer to push buttons down
             Spacer()
             
-            // Guide & Checklist Buttons
             VStack(spacing: 10) {
+                // Guide Button
                 ControlButton(iconName: "BookIcon", label: "Panduan") {
                     onGuideTapped()
                     print("Guide button tapped")
                 }
                 
+                // Checklist Button
                 ControlButton(iconName: "ChecklistIcon", label: "Checklist") {
                     onChecklistTapped()
                     print( "Checklist button tapped")
