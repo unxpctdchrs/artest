@@ -12,7 +12,7 @@ struct OnboardingView: View {
     
     var body: some View {
         
-            ZStack {
+        ZStack(alignment: .center) {
                 Image("Onboarding")
                     .resizable()
                     .scaledToFill()
@@ -20,10 +20,12 @@ struct OnboardingView: View {
                 
                 
                 VStack {
-                    Text("LLOYD:\nELECTROFIX JOURNEY")
-                        .font(.custom("Slackey-Regular", size: 70))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
+//                    Text("LLOYD:\nELECTROFIX JOURNEY")
+//                        .font(.custom("Slackey-Regular", size: 70))
+//                        .multilineTextAlignment(.center)
+//                        .foregroundColor(.white)
+                    Image("titlescreen")
+                    Spacer().frame(height: 50)
                     Button {
                         onFinish()
                     } label: {
