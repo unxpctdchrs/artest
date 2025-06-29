@@ -20,10 +20,15 @@ struct OnboardingView: View {
                 
                 
                 VStack {
-                    Text("LLOYD:\nELECTROFIX JOURNEY")
-                        .font(.custom("Slackey-Regular", size: 70))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
+//                    Text("LLOYD:\nELECTROFIX JOURNEY")
+//                        .font(.custom("Slackey-Regular", size: 70))
+//                        .multilineTextAlignment(.center)
+//                        .foregroundColor(.white)
+                    
+                    Image("titlescreen")
+                    
+                    Spacer().frame(maxHeight: 50)
+                    
                     Button {
                         onFinish()
                     } label: {

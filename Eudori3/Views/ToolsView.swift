@@ -20,8 +20,6 @@ struct ToolsView: View {
 //            }
 //            
 //            Spacer()
-            
-            Spacer()
 
 //            Button {
 //                toolsViewModel.isMultimeterActive.toggle()
@@ -32,12 +30,11 @@ struct ToolsView: View {
 //            
 //            Spacer()
 
-            
             Button {
-//                toolsViewModel.toggleTool(id: "thermal")
+                toolsViewModel.isThermalGlassActive.toggle()
             } label: {
                 Image(systemName: "sunglasses")
-//                    .foregroundStyle(toolsViewModel.activeToolID == "thermal" ? .green : .gray)
+                    .foregroundStyle(toolsViewModel.isThermalGlassActive ? .green : .gray)
             }
             
         }
