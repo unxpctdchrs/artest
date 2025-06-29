@@ -86,7 +86,7 @@ class LevelTutorial: Level {
             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
             translation: [-0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
         )
-        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.008, capacitor.position.z - 0.03]
+        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
         probe_minus.transform = Transform(
             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
             translation: [0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
@@ -297,7 +297,7 @@ class LevelTutorial: Level {
         let mesh = MeshResource.generateText(
             text,
             extrusionDepth: 0.01,
-            font: .systemFont(ofSize: 0.03),
+            font: .systemFont(ofSize: 0.025),
             containerFrame: .zero,
             alignment: .center,
             lineBreakMode: .byWordWrapping
@@ -368,7 +368,7 @@ class LevelTutorial: Level {
         let textMaterial = UnlitMaterial(color: id == 1 ? .red :.black) // pakai unlit biar ga tergantung pencahayaan
         let textEntity = ModelEntity(mesh: textMesh, materials: [textMaterial])
         textEntity.name = "sign"
-        textEntity.position = SIMD3<Float>(-0.03, 0, 0.005) // nyaris tepat di pusat bola
+        textEntity.position = SIMD3<Float>(-0.03, 0, 0.00) // nyaris tepat di pusat bola
         
         // Gabungkan teks ke dalam sphere
         sphereEntity.addChild(textEntity)

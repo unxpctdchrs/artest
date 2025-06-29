@@ -55,7 +55,6 @@ class ARViewModel: ObservableObject {
     
     // placing the level
     func placeCurrentLevel(transform: Transform, toolsViewModel: ToolsViewModel) {
-
         guard let arView = self.arView else {
             print("ARView not available for placement.")
             return
