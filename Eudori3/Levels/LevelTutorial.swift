@@ -40,7 +40,7 @@ class LevelTutorial: Level {
         
         guard let circuit = try? Entity.load(named: "tutorial_circuit"),
             let thermalGlass = try? ModelEntity.loadModel(named: "thermal_camera"),
-            let multimeter = try? ModelEntity.loadModel(named: "multimeter")
+            let multimeter = try? ModelEntity.loadModel(named: "multimeter_2")
         else {
             print("Error loading model")
             return
@@ -64,14 +64,16 @@ class LevelTutorial: Level {
         thermalGlass.generateCollisionShapes(recursive: true)
         thermalGlass.scale /= 2
         thermalGlass.position.x = -0.2
-        let rotation = simd_quatf(angle: .pi / 2.4, axis: [0, 1, 0])
-        thermalGlass.transform.rotation = rotation
+        let thermalGlassrotation = simd_quatf(angle: .pi / 2.4, axis: [0, 1, 0])
+        thermalGlass.transform.rotation = thermalGlassrotation
         
         // multimeter
         self.model.multimeter = multimeter
         multimeter.generateCollisionShapes(recursive: true)
-        multimeter.position.x = 0.3
-        multimeter.scale /= 2
+        multimeter.position.x = 0.26
+        multimeter.scale *= 1.5
+        let multimeterRotation = simd_quatf(angle: .pi / 90, axis: [0, 0, 1])
+        multimeter.transform.rotation = multimeterRotation
         
         let probe_plus = createFloatingProbe("+", 1)
         let probe_minus = createFloatingProbe( "-", 2)
@@ -81,26 +83,25 @@ class LevelTutorial: Level {
         probe_plus.name = "probe_plus"
         probe_minus.name = "probe_minus"
         
-        probe_plus.position = [capacitor.position.x - 0.00, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
+        probe_plus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.1, capacitor.position.z - 0.03]
         probe_plus.transform = Transform(
-            rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
-            translation: [-0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
+            rotation: simd_quatf(angle: -.pi / 2, axis: [1, 0, 0]), // rotasi 90° ke atas
+            translation: [-0.018, 0.004, -0.014] // posisi ke atas dalam ruang dunia
         )
-        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
+        probe_plus.scale /= 5
+        
+        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.1, capacitor.position.z - 0.03]
         probe_minus.transform = Transform(
-            rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
-            translation: [0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
+            rotation: simd_quatf(angle: .pi / 2, axis: [1, 0, 0]), // rotasi 90° ke atas
+            translation: [-0.018, 0.004, 0.0] // posisi ke atas dalam ruang dunia
         )
+        probe_minus.scale /= 5
         
         capacitor.name = "Capacitor"
         capacitor.components.set(CapacitanceComponent(value: "100 μF"))
         capacitor.generateCollisionShapes(recursive: true)
         probe_plus.generateCollisionShapes(recursive: true)
         probe_minus.generateCollisionShapes(recursive: true)
-        
-        let label = createFloatingText("Kapasitansi: 100 μF")
-        label.generateCollisionShapes(recursive: true)
-        multimeter.addChild(label)
         
         // anchor
         let anchor = AnchorEntity()
@@ -155,8 +156,6 @@ class LevelTutorial: Level {
         
         // multimeter
         guard let multimeter = self.model.multimeter,
-              let capacitor = self.model.capacitor,
-              let circuit = self.model.circuitEntity,
               let probePlusEntity = self.probePlusEntity,
               let probeMinusEntity = self.probeMinusEntity,
               let arView = arViewModel.arView,
@@ -214,7 +213,7 @@ class LevelTutorial: Level {
                         label.position = [multimeter.position.x - 0.1, multimeter.position.y + 0.1, multimeter.position.z - 0.15]
                         label.transform = Transform(
                             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
-                            translation: [0.265, 0.04, -0.05] // posisi ke atas dalam ruang dunia
+                            translation: [0.225, 0.025, -0.065] // posisi ke atas dalam ruang dunia
                         )
                         anchor.addChild(label)
                         floatingTextEntity = label
@@ -302,7 +301,7 @@ class LevelTutorial: Level {
             lineBreakMode: .byWordWrapping
         )
         
-        let material = SimpleMaterial(color: .green, isMetallic: false)
+        let material = SimpleMaterial(color: .white, isMetallic: false)
         let entity = ModelEntity(mesh: mesh, materials: [material])
         entity.name = "FloatingText"
         //        entity.components.set(BillboardComponent(worldFacing: .camera))
@@ -312,7 +311,6 @@ class LevelTutorial: Level {
     func drawCable(from: Entity, to: Entity, in arView: ARView?, isCableColorReversed: Bool) -> ModelEntity {
         guard let anchor = arView?.scene.anchors.first else { return ModelEntity() }
         
-        
         let start = from.position(relativeTo: anchor)
         let end = to.position(relativeTo: anchor)
         
@@ -321,7 +319,7 @@ class LevelTutorial: Level {
         return cable
     }
     
-    func createCableEntity(from start: SIMD3<Float>, to end: SIMD3<Float>, radius: Float = 0.004, probeType: String, isCableColorReversed: Bool) -> ModelEntity {
+    func createCableEntity(from start: SIMD3<Float>, to end: SIMD3<Float>, radius: Float = 0.002, probeType: String, isCableColorReversed: Bool) -> ModelEntity {
         let direction = normalize(end - start)
         let height = distance(start, end)
         

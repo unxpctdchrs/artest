@@ -14,6 +14,7 @@ struct MultimeterToolView: View {
         var body: some View {
             ZStack(alignment: .center) {
                 VStack {
+                    Spacer().frame(maxWidth: 50)
                     if viewModel.isMultimeterActive {
                         Text(viewModel.isFocusing ?
                              (viewModel.focusedEntityName.isEmpty ? "Fokuskan ke objek..." : viewModel.focusedEntityName)
@@ -26,20 +27,20 @@ struct MultimeterToolView: View {
                             .padding(.top, 50)
                     }
 
-                    Spacer()
+//                    Spacer()
 
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            viewModel.toggleMultimeter()
-                        }) {
-                            Text(viewModel.isMultimeterActive ? "Matikan Multimeter" : "Aktifkan Multimeter")
-                                .padding()
-                                .background(viewModel.isMultimeterActive ? Color.red : Color.green)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding(.bottom, 40)
+//                    HStack(spacing: 20) {
+//                        Button(action: {
+//                            viewModel.toggleMultimeter()
+//                        }) {
+//                            Text(viewModel.isMultimeterActive ? "Matikan Multimeter" : "Aktifkan Multimeter")
+//                                .padding()
+//                                .background(viewModel.isMultimeterActive ? Color.red : Color.green)
+//                                .foregroundColor(.white)
+//                                .cornerRadius(10)
+//                        }
+//                    }
+//                    .padding(.bottom, 40)
                 }
 
                 if showGuidebook {
