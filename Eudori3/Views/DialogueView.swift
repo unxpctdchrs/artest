@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct DialogueView: View {
-    @ObservedObject var viewModel = DialogueViewModel()
+    @ObservedObject var viewModel: DialogueViewModel
+    @Binding var showDialogue: Bool
+    @Binding var currentIndexDialogue: Int
+    @State var currentIndex: Int = 0
     
     var body: some View {
         let slide = viewModel.slides[viewModel.currentIndex]
@@ -61,8 +64,14 @@ struct DialogueView: View {
                 .frame(maxHeight: .infinity, alignment: .bottom)
             }
             .onTapGesture {
-                print("Tapped. Current index: \(viewModel.currentIndex)")
+                print("Tapped. Current index on viewmodel: \(viewModel.currentIndex)")
                     viewModel.nextSlide()
+//                currentIndexDialogue += 1
+//                viewModel.currentIndex = currentIndexDialogue
+//                print("current index on view: \(currentIndex)")
+//                print("current index on mainview: \(currentIndexDialogue)")
+//                if currentIndexDialogue == 2 { showDialogue = false }
+//                if currentIndexDialogue == 3 { showDialogue = false }
             }
         }
     }
@@ -70,5 +79,5 @@ struct DialogueView: View {
 
 
 #Preview {
-    DialogueView()
+    ContentView()
 }

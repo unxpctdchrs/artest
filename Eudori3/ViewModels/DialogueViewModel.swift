@@ -9,6 +9,7 @@ import Foundation
 
 class DialogueViewModel: ObservableObject {
     @Published var currentIndex: Int = 0
+    @Published var isDialogueShowing: Bool = true
     
     let slides: [DialogueModel] = [
         DialogueModel(id: 0, text: "Waktunya bekerja. Pelanggan pertama menunggu, dan aku tak boleh mengecewakan."),
@@ -24,6 +25,12 @@ class DialogueViewModel: ObservableObject {
     func nextSlide() {
         if currentIndex < slides.count - 1 {
             currentIndex += 1
+            print("INDEX: \(currentIndex)")
+            if currentIndex == 3 {
+                isDialogueShowing = false
+            } else {
+                isDialogueShowing = true
+            }
         }
     }
 }
