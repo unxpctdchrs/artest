@@ -57,6 +57,7 @@ class LevelTutorial: Level {
     
         guard let capacitor = getCapacitor() else { return }
         self.capacitor = capacitor
+        self.model.capacitor = capacitor
         
         // thermalcam
         self.model.thermalGlassEntity = thermalGlass
@@ -153,15 +154,17 @@ class LevelTutorial: Level {
         }
         
         // multimeter
-        guard let toolsViewModel = self.toolsViewModel,
-              let multimeter = self.model.multimeter,
-              let capacitor = self.model.capacitorEntity,
+        guard let multimeter = self.model.multimeter,
+              let capacitor = self.model.capacitor,
               let circuit = self.model.circuitEntity,
               let probePlusEntity = self.probePlusEntity,
               let probeMinusEntity = self.probeMinusEntity,
               let arView = arViewModel.arView,
-              let anchor = arView.scene.anchors.first
-        else { return }
+              let anchor = self.anchor
+        else {
+            print("failed")
+            return
+        }
         
         // Syarat untuk tampilkan floatingText
         if toolsViewModel.isMultimeterActive  {
@@ -222,6 +225,9 @@ class LevelTutorial: Level {
                     break
                 }
                 floatingTextEntity?.isEnabled = true
+            }
+            else {
+                print("isfocusing is: \(toolsViewModel.isFocusing)")
             }
         } else if(!toolsViewModel.isMultimeterActive) {
             floatingTextEntity?.removeFromParent()
