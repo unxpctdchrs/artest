@@ -10,8 +10,6 @@ import SwiftUI
 struct PlaceEntityButtonView: View {
     @ObservedObject var arViewModel: ARViewModel
     @ObservedObject var toolsViewModel: ToolsViewModel
-    
-    @State private var showbuttonstate: Bool = true
     @State private var isFocused: Bool = true
     
     var body: some View {
@@ -22,11 +20,11 @@ struct PlaceEntityButtonView: View {
 //            .frame(maxWidth: 560, maxHeight: 260)
 //            .background(.orange)
             
-            if showbuttonstate {
+            if toolsViewModel.showbuttonstate {
                 Button {
                     arViewModel.isPlacingObject = true
                     arViewModel.gameManager.currentLevel = 1
-                    showbuttonstate = false
+                    toolsViewModel.showbuttonstate = false
                 } label: {
                     if arViewModel.focusState {
                         Image(systemName: "plus.circle").font(.system(size: 160))

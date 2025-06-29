@@ -65,7 +65,6 @@ struct ContentView : View {
                     }
                     .transition(.scale)
                 }
-                
 //                if (showbuttonstate) {
 //                    Button {
 //                        arViewModel.isPlacingObject = true
@@ -105,6 +104,20 @@ struct ContentView : View {
 //            } else {
 //                Text("Tool: \(toolsViewModel.activeToolID ?? "nil")")
 //            }
+        }
+        .onChange(of: showGuide) { oldValue, newValue in
+            if !oldValue {
+                toolsViewModel.showbuttonstate = false
+            } else {
+                toolsViewModel.showbuttonstate = true
+            }
+        }
+        .onChange(of: showChecklist) { oldValue, newValue in
+            if !oldValue {
+                toolsViewModel.showbuttonstate = false
+            } else {
+                toolsViewModel.showbuttonstate = true
+            }
         }
         .animation(.easeInOut, value: showGuide)
         .animation(.easeInOut, value: showChecklist)

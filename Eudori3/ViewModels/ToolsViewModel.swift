@@ -20,6 +20,8 @@ class ToolsViewModel: ObservableObject {
     @Published var secondFocusedEntity: Entity?
     @Published var isProbeEntityActive: Bool = false
     
+    @Published var showbuttonstate: Bool = true
+    
     var gameManager: GameManager
     
     init(gameManager: GameManager) {
