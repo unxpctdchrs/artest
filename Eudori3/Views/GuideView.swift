@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GuideView: View {
+//    @ObservedObject var viewModel: GuideViewModel
     var onDismiss: () -> Void
     
     var body: some View {

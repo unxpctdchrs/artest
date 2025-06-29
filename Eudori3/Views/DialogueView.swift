@@ -8,23 +8,22 @@
 import SwiftUI
 
 struct DialogueView: View {
-    @ObservedObject var viewModel = DialogueViewModel()
+    @ObservedObject var viewModel: DialogueViewModel
     
     var body: some View {
-        let slide = viewModel.slides[viewModel.currentIndex]
+        let slide = viewModel.currentSlide
         
         GeometryReader { geometry in
             ZStack {
-                // Transparent full screen tap area
-                Rectangle()
-                    .fill(Color.clear)
+                // Tappable background layer (ensures touches are received)
+                Color.black.opacity(0.001) // must be > 0 opacity to catch taps
                     .ignoresSafeArea()
                     .onTapGesture {
-                        print("Next slide tapped")
+                        viewModel.nextSlide()
                     }
                 
+                // Dialogue UI
                 ZStack(alignment: .leading) {
-                    // Dialog box with border and padding
                     VStack(alignment: .leading, spacing: 12) {
                         Text(slide.text)
                             .foregroundColor(.black)
@@ -52,7 +51,6 @@ struct DialogueView: View {
                     .padding(.top, geometry.size.width * 0.45)
                     .padding(.leading, geometry.size.width * 0.1)
                     
-                    // Lloyd portrait image, overlapping from the left
                     Image("DialogLloyd")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -60,15 +58,11 @@ struct DialogueView: View {
                 }
                 .frame(maxHeight: .infinity, alignment: .bottom)
             }
-            .onTapGesture {
-                print("Tapped. Current index: \(viewModel.currentIndex)")
-                    viewModel.nextSlide()
-            }
         }
     }
 }
 
 
-#Preview {
-    DialogueView()
-}
+//#Preview {
+//    DialogueView()
+//}

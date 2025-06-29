@@ -7,22 +7,18 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct ContentView: View {
     @StateObject var gameManager: GameManager
-    
     @StateObject var arViewModel: ARViewModel
     @StateObject var toolsViewModel: ToolsViewModel
-    
-    @State var showbuttonstate = true
+    @StateObject var dialogueViewModel = DialogueViewModel()
     
     @State private var currentStep: AppStep = .onboarding
-    @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
     
     init() {
         let gameManager = GameManager()
-        
         _gameManager = StateObject(wrappedValue: gameManager)
         _arViewModel = StateObject(wrappedValue: ARViewModel(gameManager: gameManager))
         _toolsViewModel = StateObject(wrappedValue: ToolsViewModel(gameManager: gameManager))
@@ -35,22 +31,68 @@ struct ContentView : View {
                 OnboardingView {
                     currentStep = .prologue
                 }
+                
             case .prologue:
                 PrologueView {
-                    currentStep = .arExperience
+                    currentStep = .dialogue(0)
                 }
-            case .arExperience:
+                
+            case .dialogue(let id):
+                ZStack {
+                    CameraPermissionView {
+                        ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
+                            .edgesIgnoringSafeArea(.all)
+                    }
+                    
+                    if controlConfig.show {
+                        ControlView(
+                            onChecklistTapped: { showChecklist = true },
+                            onGuideTapped: { showGuide = true },
+                            showReputationBar: controlConfig.showReputationBar,
+                            showDebtBar: controlConfig.showDebtBar,
+                            showGuideButton: controlConfig.showGuideButton,
+                            showChecklistButton: controlConfig.showChecklistButton
+                        )
+                    }
+                    
+                    DialogueView(viewModel: dialogueViewModel)
+                        .onAppear {
+                            let _: Int
+                            func nextStep(after id: Int) -> AppStep {
+                                switch id {
+                                case 0: return .dialogue(1)
+                                case 1: return .gameplay
+                                case 2: return .dialogue(3)
+                                case 3: return .dialogue(4)
+                                case 4: return .dialogue(5)
+                                case 5: return .dialogue(6)
+                                case 6: return .dialogue(7)
+                                default: return .gameplay
+                                }
+                            }
+                            
+                            dialogueViewModel.configure(startIndex: id, endIndex: id + 1) {
+                                print("Dialogue finished, moving to next step")
+                                currentStep = nextStep(after: id)
+                            }
+                        }
+                }
+                
+            case .gameplay:
                 CameraPermissionView {
                     ARViewContainer(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
                         .edgesIgnoringSafeArea(.all)
                 }
                 
-                if showControls {
+                if controlConfig.show {
                     ControlView(
                         onChecklistTapped: { showChecklist = true },
-                        onGuideTapped: { showGuide = true }
+                        onGuideTapped: { showGuide = true },
+                        showReputationBar: controlConfig.showReputationBar,
+                        showDebtBar: controlConfig.showDebtBar,
+                        showGuideButton: controlConfig.showGuideButton,
+                        showChecklistButton: controlConfig.showChecklistButton
                     )
-                    .transition(.opacity)
                 }
                 
                 if showChecklist {
@@ -66,39 +108,92 @@ struct ContentView : View {
                     }
                     .transition(.scale)
                 }
-                
-                if (showbuttonstate) {
-                    Button {
-                        arViewModel.isPlacingObject = true
-                        arViewModel.gameManager.currentLevel = 1
-                        showbuttonstate = false
-                    } label: {
-                        Text("Hello, World!")
-                    }
-                }
-                
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button {
-                            arViewModel.gameManager.goToNextLevel()
-                        } label: {
-                            Text("GO TO NEXT LEVEL")
-                        }
-                    }
-                }
             }
         }
-        .animation(.easeInOut, value: showGuide)
-        .animation(.easeInOut, value: showChecklist)
+        .animation(.easeInOut, value: currentStep)
+    }
+    
+    // MARK: - Dynamic UI Config
+    private var controlConfig: ControlUIConfig {
+        switch currentStep {
+        case .gameplay:
+            return ControlUIConfig(
+                show: true,
+                showReputationBar: true,
+                showDebtBar: true,
+                showGuideButton: true,
+                showChecklistButton: true
+            )
+            
+        case .dialogue(let id):
+            switch id {
+            case 0:
+                return ControlUIConfig(show: false)
+            case 1:
+                return ControlUIConfig(
+                    show: true,
+                    showReputationBar: false,
+                    showDebtBar: true,
+                    showGuideButton: false,
+                    showChecklistButton: false
+                )
+            case 2:
+                return ControlUIConfig(
+                    show: true,
+                    showReputationBar: false,
+                    showDebtBar: true,
+                    showGuideButton: false,
+                    showChecklistButton: true
+                )
+            case 4:
+                return ControlUIConfig(
+                    show: true,
+                    showReputationBar: false,
+                    showDebtBar: true,
+                    showGuideButton: true,
+                    showChecklistButton: true
+                )
+            case 5:
+                return ControlUIConfig(
+                    show: true,
+                    showReputationBar: true,
+                    showDebtBar: false,
+                    showGuideButton: false,
+                    showChecklistButton: false
+                )
+            case 3, 6, 7:
+                return ControlUIConfig(
+                    show: true,
+                    showReputationBar: true,
+                    showDebtBar: true,
+                    showGuideButton: true,
+                    showChecklistButton: true
+                )
+            default:
+                return ControlUIConfig()
+            }
+            
+        default:
+            return ControlUIConfig()
+        }
     }
 }
 
-enum AppStep {
+// MARK: - Supporting Types
+
+enum AppStep: Equatable {
     case onboarding
     case prologue
-    case arExperience
+    case dialogue(Int)
+    case gameplay
+}
+
+struct ControlUIConfig {
+    var show: Bool = false
+    var showReputationBar: Bool = true
+    var showDebtBar: Bool = true
+    var showGuideButton: Bool = true
+    var showChecklistButton: Bool = true
 }
 
 #Preview {

@@ -18,12 +18,27 @@ class DialogueViewModel: ObservableObject {
         DialogueModel(id: 4, text: "Catatan Bapak tentang kapasitor masih tersimpan di buku catatan ini. Selalu aku buka saat mulai bingung."),
         DialogueModel(id: 5, text: "Nggak ada ruang untuk kesalahan. Kalau aku salah diagnosa, pelanggan bisa minta ganti rugi. Dan kalau sampai tiga kali, reputasi toko bisa memburuk... dan aku nggak bakal punya pelanggan lagi."),
         DialogueModel(id: 6, text: "Akhirnya, dari hasil perbaikan kemarin, aku berhasil menyisihkan sedikit uang. Cukup untuk membeli alat baru, Multimeter. Satu langkah kecil, tapi penting, untuk membantu pekerjaanku lebih akurat."),
-        DialogueModel(id: 7, text: "Aku perlu menekan objek multimeter untuk menggunakannya")
+        DialogueModel(id: 7, text: "Aku perlu menekan objek multimeter untuk menggunakannya.")
     ]
     
+    var endIndex: Int = 0
+    var onFinish: (() -> Void)? = nil
+    
+    func configure(startIndex: Int, endIndex: Int, onFinish: @escaping () -> Void) {
+        self.currentIndex = startIndex
+        self.endIndex = endIndex
+        self.onFinish = onFinish
+    }
+    
     func nextSlide() {
-        if currentIndex < slides.count - 1 {
+        if currentIndex < endIndex {
             currentIndex += 1
+        } else {
+            onFinish?()
         }
+    }
+    
+    var currentSlide: DialogueModel {
+        slides[currentIndex]
     }
 }

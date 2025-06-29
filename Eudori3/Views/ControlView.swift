@@ -10,71 +10,79 @@ import SwiftUI
 struct ControlView: View {
     var onChecklistTapped: () -> Void
     var onGuideTapped: () -> Void
-    var progress: CGFloat = 0.3
+    var progress: CGFloat = 0
+    
+    var showReputationBar: Bool
+    var showDebtBar: Bool
+    var showGuideButton: Bool
+    var showChecklistButton: Bool
     
     var body: some View {
         VStack(alignment: .trailing) {
             // Top Bar
-            HStack {
-                // Reputation Bar
-                HStack(spacing: 12) {
-                    Text("Reputasi Toko")
-                        .foregroundColor(Color.white)
-                        .font(.custom("Nunito-SemiBold", size: 20))
-                        .padding(.trailing, 12)
-                    
-                    // Thumbs Row
-                    ForEach(0..<3) { _ in
-                        ZStack {
-                            Circle()
-                                .fill(Color("ThumbsBg"))
-                                .frame(width: 35, height: 35)
+            if showReputationBar || showDebtBar {
+                HStack {
+                    if showReputationBar {
+                        // Reputation Bar
+                        HStack(spacing: 12) {
+                            Text("Reputasi Toko")
+                                .foregroundColor(.white)
+                                .font(.custom("Nunito-SemiBold", size: 20))
+                                .padding(.trailing, 12)
                             
-                            Image(systemName: "hand.thumbsup.fill")
-                                .foregroundColor(Color("Thumbs"))
+                            ForEach(0..<3) { _ in
+                                ZStack {
+                                    Circle()
+                                        .fill(Color("ThumbsBg"))
+                                        .frame(width: 35, height: 35)
+                                    
+                                    Image(systemName: "hand.thumbsup.fill")
+                                        .foregroundColor(Color("Thumbs"))
+                                }
+                            }
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(Color("Main"))
+                        .cornerRadius(6)
+                        .padding(.leading, 12)
+                    }
+                    
+                    Spacer()
+                    
+                    if showDebtBar {
+                        Image(systemName: "dollarsign.bank.building")
+                            .font(.system(size: 36, weight: .bold))
+                            .foregroundColor(Color("Main"))
+                        
+                        ZStack(alignment: .leading) {
+                            Image("ProgressBar")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 50)
+                            
+                            Image("ReputationBar")
+                                .resizable()
+                                .frame(width: 280 * progress, height: 40)
+                                .padding(.leading, 30)
                         }
                     }
                 }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 12)
-                .background(Color("Main"))
-                .cornerRadius(6)
-                .padding(.leading, 12)
-                
-                Spacer()
-                
-                // Debt Bar
-                Image(systemName: "dollarsign.bank.building")
-                    .font(.system(size: 36, weight: .bold))
-                    .foregroundColor(Color("Main"))
-
-                ZStack(alignment: .leading) {
-                    Image("ProgressBar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 50)
-                    
-                    Image("ReputationBar")
-                        .resizable()
-                        .frame(width: 280 * progress, height: 40)
-                        .padding(.leading, 30)
-                }
             }
-
-            // Spacer to push buttons down
+            
             Spacer()
             
             VStack(spacing: 10) {
-                // Guide Button
-                ControlButton(iconName: "BookIcon", label: "Panduan") {
-                    onGuideTapped()
-                    print("Guide button tapped")
+                if showGuideButton {
+                    ControlButton(iconName: "BookIcon", label: "Panduan") {
+                        onGuideTapped()
+                    }
                 }
                 
-                // Checklist Button
-                ControlButton(iconName: "ChecklistIcon", label: "Checklist") {
-                    onChecklistTapped()
-                    print( "Checklist button tapped")
+                if showChecklistButton {
+                    ControlButton(iconName: "ChecklistIcon", label: "Checklist") {
+                        onChecklistTapped()
+                    }
                 }
             }
             
@@ -117,6 +125,10 @@ struct ControlButton: View {
 #Preview {
     ControlView(
         onChecklistTapped: {},
-        onGuideTapped: {}
+        onGuideTapped: {},
+        showReputationBar: true,
+        showDebtBar: true,
+        showGuideButton: false,
+        showChecklistButton: true
     )
 }
