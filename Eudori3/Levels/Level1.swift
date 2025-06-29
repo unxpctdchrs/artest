@@ -27,7 +27,7 @@ class Level1: Level {
         self.model = Model()
     }
     
-    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel) {
+    func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel) {
         guard let circuit = try? Entity.load(named: "testboard_6"), let capacitor = try? ModelEntity.loadModel(named: "capacitor_1.usdz") else {
             print("Failed to load models in level1.")
             return

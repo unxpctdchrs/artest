@@ -69,8 +69,10 @@ struct ARViewContainer: UIViewRepresentable {
             context.coordinator.onUpdate(event: event)
         }
         
+        let meshResource = MeshResource.generatePlane(width: 0.1, depth: 0.1)
+        
         // Add FocusEntity
-        context.coordinator.focusEntity = FocusEntity(on: arView, style: .classic(color: .red))
+        context.coordinator.focusEntity = FocusEntity(on: arView, style: .colored(onColor: .color(.theColorBlue), offColor: .color(.white), nonTrackingColor: .color(.white), mesh: meshResource))
 
         return arView
     }
@@ -90,12 +92,21 @@ struct ARViewContainer: UIViewRepresentable {
                 print("currently tracking a surface")
                 
                 if arViewModel.gameManager.currentLevel > 0 {
-                    arViewModel.placeCurrentLevel(transform: focusEntity.transform)
+                    arViewModel.placeCurrentLevel(transform: focusEntity.transform, toolsViewModel: toolsViewModel)
                 }
 
             default:
                 print("Cannot place object: FocusEntity is not tracking a surface.")
             }
+        }
+        
+        switch context.coordinator.focusEntity?.state {
+        case .tracking:
+            arViewModel.focusState = true
+        case .initializing:
+            arViewModel.focusState = false
+        default:
+            arViewModel.focusState = false
         }
         
         DispatchQueue.main.async {

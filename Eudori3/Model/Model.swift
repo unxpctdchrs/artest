@@ -10,4 +10,5 @@ import RealityFoundation
 struct Model {
     var circuitEntity: Entity?
     var capacitorEntity: ModelEntity?
+    var thermalGlassEntity: ModelEntity?
 }

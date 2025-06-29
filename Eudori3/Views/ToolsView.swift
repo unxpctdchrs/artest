@@ -12,23 +12,23 @@ struct ToolsView: View {
     
     var body: some View {
         HStack {
-            Button {
-                toolsViewModel.isMagnifyingGlassActive.toggle()
-            } label: {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(toolsViewModel.isMagnifyingGlassActive ? .green : .gray)
-            }
+//            Button {
+//                toolsViewModel.isMagnifyingGlassActive.toggle()
+//            } label: {
+//                Image(systemName: "magnifyingglass")
+//                    .foregroundStyle(toolsViewModel.isMagnifyingGlassActive ? .green : .gray)
+//            }
+//            
+//            Spacer()
             
-            Spacer()
-            
-            Button {
-                toolsViewModel.isMultimeterActive.toggle()
-            } label: {
-                Image(systemName: "appletvremote.gen2")
-                    .foregroundStyle(toolsViewModel.isMultimeterActive ? .green : .gray)
-            }
-            
-            Spacer()
+//            Button {
+//                toolsViewModel.isMultimeterActive.toggle()
+//            } label: {
+//                Image(systemName: "appletvremote.gen2")
+//                    .foregroundStyle(toolsViewModel.isMultimeterActive ? .green : .gray)
+//            }
+//            
+//            Spacer()
             
             Button {
                 toolsViewModel.isThermalGlassActive.toggle()

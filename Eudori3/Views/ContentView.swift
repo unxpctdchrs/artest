@@ -15,7 +15,7 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
-    @State private var currentStep: AppStep = .onboarding
+    @State private var currentStep: AppStep = .arExperience
     @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
@@ -67,25 +67,34 @@ struct ContentView : View {
                     .transition(.scale)
                 }
                 
-                if (showbuttonstate) {
-                    Button {
-                        arViewModel.isPlacingObject = true
-                        arViewModel.gameManager.currentLevel = 1
-                        showbuttonstate = false
-                    } label: {
-                        Text("Hello, World!")
-                    }
+//                if (showbuttonstate) {
+//                    Button {
+//                        arViewModel.isPlacingObject = true
+//                        arViewModel.gameManager.currentLevel = 1
+//                        showbuttonstate = false
+//                    } label: {
+//                        Text("Hello, World!")
+//                    }
+//                }
+                
+                PlaceEntityButtonView(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
+                
+                if self.toolsViewModel.isThermalGlassActive {
+                    ThermalVision().ignoresSafeArea(.all)
                 }
                 
                 VStack {
                     Spacer()
                     HStack {
-                        Spacer()
-                        Button {
-                            arViewModel.gameManager.goToNextLevel()
-                        } label: {
-                            Text("GO TO NEXT LEVEL")
+                        if toolsViewModel.isThermalGlassActive {
+                            ToolsView(toolsViewModel: toolsViewModel)
                         }
+                        Spacer()
+//                        Button {
+//                            arViewModel.gameManager.goToNextLevel()
+//                        } label: {
+//                            Text("GO TO NEXT LEVEL")
+//                        }
                     }
                 }
             }
