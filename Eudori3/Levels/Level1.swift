@@ -163,8 +163,6 @@ class Level1: Level {
               let circuit = self.model.circuitEntity,
               let probePlusEntity = self.probePlusEntity,
               let probeMinusEntity = self.probeMinusEntity,
-//              var cableProbePlusEntity = self.cableProbePlusEntity,
-//              var cableProbeMinusEntity = self.cableProbeMinusEntity,
               let arView = arViewModel.arView,
               let anchor = arView.scene.anchors.first
         else { return }
