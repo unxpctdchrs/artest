@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView : View {
     @StateObject var gameManager: GameManager
-    
     @StateObject var arViewModel: ARViewModel
     @StateObject var toolsViewModel: ToolsViewModel
     
@@ -98,6 +97,14 @@ struct ContentView : View {
                     }
                 }
             }
+            if toolsViewModel.isMultimeterActive {
+                MultimeterToolView(viewModel: toolsViewModel)
+            }
+//            if toolsViewModel.activeToolID == "multimeter" {
+//                MultimeterToolView()
+//            } else {
+//                Text("Tool: \(toolsViewModel.activeToolID ?? "nil")")
+//            }
         }
         .animation(.easeInOut, value: showGuide)
         .animation(.easeInOut, value: showChecklist)

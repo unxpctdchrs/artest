@@ -11,4 +11,7 @@ struct Model {
     var circuitEntity: Entity?
     var capacitorEntity: ModelEntity?
     var thermalGlassEntity: ModelEntity?
+    var multimeter: ModelEntity?
+    var probePlusEntity: ModelEntity?
+    var probeMinusEntity: ModelEntity?
 }

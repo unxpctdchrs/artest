@@ -10,7 +10,6 @@ import Foundation
 class PrologueViewModel: ObservableObject {
     @Published var currentIndex: Int = 0
     
-    // TODO: Replace with the correct image
     let slides: [PrologueModel] = [
         PrologueModel(id: 0, imageName: "prolog1", text: "Kios servis elektronik ini adalah peninggalan bapak yang telah tiada.  Dulu, tempat ini ramai dengan pelanggan. Kini hanya aku, kios yang hampir bangkrut, dan semangat yang belum padam."),
         PrologueModel(id: 1, imageName: "prolog2", text: "Untuk menjaga toko ini tetap berdiri, aku terpaksa meminjam uang. Kalau tidak begitu… toko ini akan tutup."),

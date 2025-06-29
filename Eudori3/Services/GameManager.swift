@@ -22,7 +22,7 @@ class GameManager: ObservableObject {
     // Add level here
     private let levels: [Int: Level] = [
         1: LevelTutorial(),
-        2: Level1(),
+//        2: Level1(),
     ]
     
     // load and activate a new level
