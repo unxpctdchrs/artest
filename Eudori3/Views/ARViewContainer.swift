@@ -114,6 +114,7 @@ struct ARViewContainer: UIViewRepresentable {
         
         DispatchQueue.main.async {
             arViewModel.isPlacingObject = false
+            arViewModel.objectIsPlaced = true
         }
     }
     

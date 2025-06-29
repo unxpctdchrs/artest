@@ -14,7 +14,7 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
-    @State private var currentStep: AppStep = .onboarding
+    @State private var currentStep: AppStep = .arExperience
     @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
@@ -103,16 +103,24 @@ struct ContentView : View {
         }
         .onChange(of: showGuide) { oldValue, newValue in
             if !oldValue {
+                toolsViewModel.isMultimeterActive = false
+                toolsViewModel.isThermalGlassActive = false
                 toolsViewModel.showbuttonstate = false
             } else {
-                toolsViewModel.showbuttonstate = true
+                if !arViewModel.objectIsPlaced {
+                    toolsViewModel.showbuttonstate = true
+                }
             }
         }
         .onChange(of: showChecklist) { oldValue, newValue in
             if !oldValue {
+                toolsViewModel.isMultimeterActive = false
+                toolsViewModel.isThermalGlassActive = false
                 toolsViewModel.showbuttonstate = false
             } else {
-                toolsViewModel.showbuttonstate = true
+                if !arViewModel.objectIsPlaced {
+                    toolsViewModel.showbuttonstate = true
+                }
             }
         }
         .animation(.easeInOut, value: showGuide)

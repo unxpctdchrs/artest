@@ -11,6 +11,7 @@ import Combine
 
 class ARViewModel: ObservableObject {
     @Published var isPlacingObject: Bool = false
+    @Published var objectIsPlaced: Bool = false
     @Published var focusEntityState: Bool = true
     
     weak var arView: ARView? {
@@ -64,7 +65,9 @@ class ARViewModel: ObservableObject {
             print("No active level to place.")
             return
         }
+        
         _ = level.setupLevel(in: arView, with: transform, arViewModel: self, toolsViewModel: toolsViewModel)
+        
         DispatchQueue.main.async {
             self.focusEntityState = false
         }
