@@ -81,12 +81,12 @@ class LevelTutorial: Level {
         probe_plus.name = "probe_plus"
         probe_minus.name = "probe_minus"
         
-        probe_plus.position = [capacitor.position.x - 0.00, capacitor.position.y + 0.0, capacitor.position.z - 0.0]
+        probe_plus.position = [capacitor.position.x - 0.00, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
         probe_plus.transform = Transform(
             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
             translation: [-0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
         )
-        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y + 0.0, capacitor.position.z - 0.0]
+        probe_minus.position = [capacitor.position.x - 0.0, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
         probe_minus.transform = Transform(
             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
             translation: [0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
@@ -214,7 +214,7 @@ class LevelTutorial: Level {
                         label.position = [multimeter.position.x - 0.1, multimeter.position.y + 0.1, multimeter.position.z - 0.15]
                         label.transform = Transform(
                             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
-                            translation: [0.61, 0.1, -0.08] // posisi ke atas dalam ruang dunia
+                            translation: [0.26, 0.05, -0.04] // posisi ke atas dalam ruang dunia
                         )
                         anchor.addChild(label)
                         floatingTextEntity = label
@@ -296,7 +296,7 @@ class LevelTutorial: Level {
         let mesh = MeshResource.generateText(
             text,
             extrusionDepth: 0.01,
-            font: .systemFont(ofSize: 0.05),
+            font: .systemFont(ofSize: 0.025),
             containerFrame: .zero,
             alignment: .center,
             lineBreakMode: .byWordWrapping
@@ -367,7 +367,7 @@ class LevelTutorial: Level {
         let textMaterial = UnlitMaterial(color: id == 1 ? .red :.black) // pakai unlit biar ga tergantung pencahayaan
         let textEntity = ModelEntity(mesh: textMesh, materials: [textMaterial])
         textEntity.name = "sign"
-        textEntity.position = SIMD3<Float>(-0.03, 0, 0.005) // nyaris tepat di pusat bola
+        textEntity.position = SIMD3<Float>(-0.03, 0, 0.00) // nyaris tepat di pusat bola
         
         // Gabungkan teks ke dalam sphere
         sphereEntity.addChild(textEntity)
