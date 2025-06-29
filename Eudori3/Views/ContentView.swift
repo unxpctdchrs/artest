@@ -53,7 +53,6 @@ struct ContentView : View {
                     DialogueView(viewModel: dialogueViewModel, showDialogue: $showDialogue, currentIndexDialogue: $currentIndexDialogue)
                     
                 } else {
-                    
                     if showControls {
                         ControlView(
                             onChecklistTapped: { showChecklist = true },
@@ -66,6 +65,13 @@ struct ContentView : View {
                 if showGuide {
                     GuideView {
                         showGuide = false
+                    }
+                    .transition(.scale)
+                }
+                
+                if showChecklist {
+                    ChecklistView {
+                        showChecklist = false
                     }
                     .transition(.scale)
                 }
@@ -90,7 +96,6 @@ struct ContentView : View {
                     HStack {
                         if toolsViewModel.isThermalGlassActive {
                             ToolsView(toolsViewModel: toolsViewModel)
-                            
                             if showChecklist {
                                 ChecklistView {
                                     showChecklist = false
