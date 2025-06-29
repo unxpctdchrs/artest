@@ -162,14 +162,14 @@ class Level2: Level {
                     print("isCableAttachCorrect: \(isCableAttachCorrect)")
                     print("isplusCableAttached: \(isPlusCableAttached)")
                     print("isMinusCableAttached: \(isMinusCableAttached)")
-                    isPlusCableAttached = true
-                    isMinusCableAttached = true
+//                    isPlusCableAttached = true
+//                    isMinusCableAttached = true
                     if(isPlusCableAttached) {
                         cableProbeMinusEntity = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
                         anchor.addChild(cableProbeMinusEntity)
                     } else if (isMinusCableAttached) {
                         print("COMING IN")
-                        cableProbePlusEntity = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
+                        cableProbePlusEntity = drawCable(from: multimeter, to: probePlusEntity, in: arView, isCableColorReversed: true)
                         anchor.addChild(cableProbePlusEntity)
                     }
                     if floatingTextEntity == nil &&

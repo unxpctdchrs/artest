@@ -130,23 +130,23 @@ class Level1: Level {
             self.probeMinusEntity?.isEnabled = true
         }
         
-        DispatchQueue.main.async {
-            let cablePlus = self.drawCable(from: multimeter, to: probe_plus, in: arView, isCableColorReversed: false)
-            let cableMinus = self.drawCable(from: multimeter, to: probe_minus, in: arView, isCableColorReversed: false)
-            self.cableProbePlusEntity = cablePlus
-            self.cableProbeMinusEntity = cableMinus
-            
-            cablePlus.generateCollisionShapes(recursive: true)
-            cableMinus.generateCollisionShapes(recursive: true)
-            
-            anchor.addChild(cablePlus)
-            anchor.addChild(cableMinus)
-            
-            cablePlus.isEnabled = true
-            cableMinus.isEnabled = true
-            self.probePlusEntity?.isEnabled = true
-            self.probeMinusEntity?.isEnabled = true
-        }
+//        DispatchQueue.main.async {
+//            let cablePlus = self.drawCable(from: multimeter, to: probe_plus, in: arView, isCableColorReversed: false)
+//            let cableMinus = self.drawCable(from: multimeter, to: probe_minus, in: arView, isCableColorReversed: false)
+//            self.cableProbePlusEntity = cablePlus
+//            self.cableProbeMinusEntity = cableMinus
+//            
+//            cablePlus.generateCollisionShapes(recursive: true)
+//            cableMinus.generateCollisionShapes(recursive: true)
+//            
+//            anchor.addChild(cablePlus)
+//            anchor.addChild(cableMinus)
+//            
+//            cablePlus.isEnabled = true
+//            cableMinus.isEnabled = true
+//            self.probePlusEntity?.isEnabled = true
+//            self.probeMinusEntity?.isEnabled = true
+//        }
         
         DispatchQueue.main.async {
             arViewModel.focusEntityState = false
@@ -163,8 +163,8 @@ class Level1: Level {
               let circuit = self.model.circuitEntity,
               let probePlusEntity = self.probePlusEntity,
               let probeMinusEntity = self.probeMinusEntity,
-              var cableProbePlusEntity = self.cableProbePlusEntity,
-              var cableProbeMinusEntity = self.cableProbeMinusEntity,
+//              var cableProbePlusEntity = self.cableProbePlusEntity,
+//              var cableProbeMinusEntity = self.cableProbeMinusEntity,
               let arView = arViewModel.arView,
               let anchor = arView.scene.anchors.first
         else { return }
@@ -181,37 +181,38 @@ class Level1: Level {
                 case (true, false):
                     print("PLUS ACTIVE ONLY -> CORRECT WAY")
                     isCableAttachCorrect = true
-                    if !isPlusCableAttached {
-                        cableProbePlusEntity = drawCable(from: multimeter, to: probePlusEntity, in: arView, isCableColorReversed: true)
-                        anchor.addChild(cableProbePlusEntity)
+                    if !isPlusCableAttached && cableProbePlusEntity == nil {
+                        let cable = drawCable(from: multimeter, to: probePlusEntity, in: arView, isCableColorReversed: true)
+                        print("CABLEEE! \(cable)")
+                        anchor.addChild(cable)
+                        cableProbePlusEntity = cable
                         isPlusCableAttached = true
                     }
                 case (false, true):
                     print("MINUS ACTIVE ONLY -> WRONG WAY -> MUST PLUS FIRST")
                     isCableAttachCorrect = false
-                    if !isMinusCableAttached {
-                        cableProbeMinusEntity = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
-                        anchor.addChild(cableProbeMinusEntity)
+                    if !isMinusCableAttached && cableProbeMinusEntity == nil {
+                        let cable = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
+                        anchor.addChild(cable)
+                        cableProbeMinusEntity = cable
                         isMinusCableAttached = true
                     }
                 case (true, true):
                     print("BOTH ACTIVE")
-                    print("isCableAttachCorrect: \(isCableAttachCorrect)")
-                    print("isplusCableAttached: \(isPlusCableAttached)")
-                    print("isMinusCableAttached: \(isMinusCableAttached)")
-                    isPlusCableAttached = true
-                    isMinusCableAttached = true
-                    if(isPlusCableAttached) {
-                        cableProbeMinusEntity = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
-                        anchor.addChild(cableProbeMinusEntity)
-                    } else if (isMinusCableAttached) {
+                    if(isPlusCableAttached && !isMinusCableAttached) {
+                        let cable = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
+                        anchor.addChild(cable)
+                        cableProbeMinusEntity = cable
+                        isMinusCableAttached = true
+                    } else if (isMinusCableAttached && !isPlusCableAttached) {
                         print("COMING IN")
-                        cableProbePlusEntity = drawCable(from: multimeter, to: probeMinusEntity, in: arView, isCableColorReversed: true)
-                        anchor.addChild(cableProbePlusEntity)
+                        let cable = drawCable(from: multimeter, to: probePlusEntity, in: arView, isCableColorReversed: true)
+                        anchor.addChild(cable)
+                        cableProbePlusEntity = cable
+                        isPlusCableAttached = true
                     }
                     if floatingTextEntity == nil &&
                         !toolsViewModel.focusedEntityName.isEmpty {
-                        //                    var label = createFloatingText("0")
                         let label = createFloatingText("15 μF")
                         
                         label.position = [multimeter.position.x - 0.1, multimeter.position.y + 0.1, multimeter.position.z - 0.15]
@@ -219,7 +220,6 @@ class Level1: Level {
                             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
                             translation: [0.61, 0.1, -0.08] // posisi ke atas dalam ruang dunia
                         )
-                        //                label.position = [0.1, 0.1, 0] // relatif ke multimeter (naik 5 cm)
                         anchor.addChild(label)
                         floatingTextEntity = label
                     }
@@ -236,11 +236,14 @@ class Level1: Level {
             floatingTextEntity = nil
             probePlusEntity.isEnabled = false
             probeMinusEntity.isEnabled = false
-            cableProbePlusEntity.isEnabled = false
-            cableProbeMinusEntity.isEnabled = false
-            cableProbePlusEntity.removeFromParent()
-            cableProbeMinusEntity.removeFromParent()
-            
+            cableProbePlusEntity?.removeFromParent()
+            cableProbeMinusEntity?.removeFromParent()
+            cableProbePlusEntity?.isEnabled = false
+            cableProbeMinusEntity?.isEnabled = false
+            cableProbePlusEntity = nil
+            cableProbeMinusEntity = nil
+            isPlusCableAttached = false
+            isMinusCableAttached = false
         }
         
         
