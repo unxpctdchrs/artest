@@ -69,10 +69,10 @@ struct ARViewContainer: UIViewRepresentable {
             context.coordinator.onUpdate(event: event)
         }
         
-//        let meshResource = MeshResource.generatePlane(width: 0.1, depth: 0.1)
+        let meshResource = MeshResource.generatePlane(width: 0.1, depth: 0.1)
         
         // Add FocusEntity
-        context.coordinator.focusEntity = FocusEntity(on: arView, style: .classic(color: .orange))
+        context.coordinator.focusEntity = FocusEntity(on: arView, style: .colored(onColor: .color(.theColorBlue), offColor: .color(.white), nonTrackingColor: .color(.white), mesh: meshResource))
 
         //set ARView for multimeter tool
         toolsViewModel.setARView(arView)

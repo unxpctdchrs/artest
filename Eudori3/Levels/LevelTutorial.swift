@@ -81,7 +81,7 @@ class LevelTutorial: Level {
         probe_plus.name = "probe_plus"
         probe_minus.name = "probe_minus"
         
-        probe_plus.position = [capacitor.position.x - 0.00, capacitor.position.y - 0.08, capacitor.position.z - 0.03]
+        probe_plus.position = [capacitor.position.x - 0.00, capacitor.position.y + 0.0, capacitor.position.z - 0.0]
         probe_plus.transform = Transform(
             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
             translation: [-0.05, 0.05, 0.0] // posisi ke atas dalam ruang dunia
@@ -100,7 +100,6 @@ class LevelTutorial: Level {
         
         let label = createFloatingText("Kapasitansi: 100 μF")
         label.generateCollisionShapes(recursive: true)
-        label.scale /= 2
         multimeter.addChild(label)
         
         // anchor
@@ -215,7 +214,7 @@ class LevelTutorial: Level {
                         label.position = [multimeter.position.x - 0.1, multimeter.position.y + 0.1, multimeter.position.z - 0.15]
                         label.transform = Transform(
                             rotation: simd_quatf(angle: -.pi / 2, axis: [1.0, 0, 0]), // rotasi 90° ke atas
-                            translation: [0.26, 0.03, -0.05] // posisi ke atas dalam ruang dunia
+                            translation: [0.61, 0.1, -0.08] // posisi ke atas dalam ruang dunia
                         )
                         anchor.addChild(label)
                         floatingTextEntity = label

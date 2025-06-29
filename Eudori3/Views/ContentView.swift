@@ -15,7 +15,7 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
-    @State private var currentStep: AppStep = .onboarding
+    @State private var currentStep: AppStep = .arExperience
     @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
