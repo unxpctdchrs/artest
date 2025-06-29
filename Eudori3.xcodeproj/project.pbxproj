@@ -105,11 +105,11 @@
 				};
 			};
 			buildConfigurationList = 0B62119D2DF93AC50047F114 /* Build configuration list for PBXProject "Eudori3" */;
-			developmentRegion = en;
+			developmentRegion = id;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				id,
 			);
 			mainGroup = 0B6211992DF93AC50047F114;
 			minimizedProjectReferenceProxies = 1;
@@ -275,17 +275,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QMCXKKF33C;
+				DEVELOPMENT_TEAM = W49WD92TK5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eudori3/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Lloyd: Electrofix Journey";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Untuk menampilkan komponen 3D di lingkungan anda menggunakan Augmented Reality.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -295,7 +297,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -306,17 +308,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QMCXKKF33C;
+				DEVELOPMENT_TEAM = W49WD92TK5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eudori3/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Lloyd: Electrofix Journey";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Untuk menampilkan komponen 3D di lingkungan anda menggunakan Augmented Reality.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,7 +330,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
