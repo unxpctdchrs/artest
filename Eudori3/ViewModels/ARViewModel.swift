@@ -29,6 +29,8 @@ class ARViewModel: ObservableObject {
     
     private var levelCleanupCancellable: AnyCancellable?
     
+    var focusState: Bool = false
+    
     init(gameManager: GameManager) {
         self.gameManager = gameManager
     }
@@ -52,7 +54,7 @@ class ARViewModel: ObservableObject {
     }
     
     // placing the level
-    func placeCurrentLevel(transform: Transform,toolsViewModel: ToolsViewModel) {
+    func placeCurrentLevel(transform: Transform, toolsViewModel: ToolsViewModel) {
         guard let arView = self.arView else {
             print("ARView not available for placement.")
             return
@@ -62,8 +64,7 @@ class ARViewModel: ObservableObject {
             print("No active level to place.")
             return
         }
-        
-        _ = level.setupLevel(in: arView, with: transform, arViewModel: self, toolsViewModel: toolsViewModel )
+        _ = level.setupLevel(in: arView, with: transform, arViewModel: self, toolsViewModel: toolsViewModel)
         DispatchQueue.main.async {
             self.focusEntityState = false
         }

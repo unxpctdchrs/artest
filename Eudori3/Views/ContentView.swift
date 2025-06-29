@@ -15,8 +15,8 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
-    @State private var currentStep: AppStep = .onboarding
-    @State private var showControls = false
+    @State private var currentStep: AppStep = .arExperience
+    @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
     @State private var showDialogue = true
@@ -83,24 +83,65 @@ struct ContentView : View {
                             showbuttonstate = false
                         } label: {
                             Text("Hello, World!")
+                            
+                                .transition(.scale)
                         }
-                    }
-                    
-                    VStack {
-                        Spacer()
-                        HStack {
+                        
+                        //                if (showbuttonstate) {
+                        //                    Button {
+                        //                        arViewModel.isPlacingObject = true
+                        //                        arViewModel.gameManager.currentLevel = 1
+                        //                        showbuttonstate = false
+                        //                    } label: {
+                        //                        Text("Hello, World!")
+                        //                    }
+                        //                }
+                        
+                        PlaceEntityButtonView(arViewModel: arViewModel, toolsViewModel: toolsViewModel)
+                        
+                        if self.toolsViewModel.isThermalGlassActive {
+                            ThermalVision().ignoresSafeArea(.all)
+                        }
+                        
+                        VStack {
                             Spacer()
-                            Button {
-                                arViewModel.gameManager.goToNextLevel()
-                                showDialogue = true
-                            } label: {
-                                Text("GO TO NEXT LEVEL")
+                            HStack {
+                                if toolsViewModel.isThermalGlassActive {
+                                    ToolsView(toolsViewModel: toolsViewModel)
+                                }
+                                Spacer()
+                                //                        Button {
+                                //                            arViewModel.gameManager.goToNextLevel()
+                                //                        } label: {
+                                //                            Text("GO TO NEXT LEVEL")
+                                //                        }
+                            }
+                            
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Button {
+                                        arViewModel.gameManager.goToNextLevel()
+                                        showDialogue = true
+                                    } label: {
+                                        Text("GO TO NEXT LEVEL")
+                                    }
+                                }
                             }
                         }
+                        if toolsViewModel.isMultimeterActive {
+                            MultimeterToolView(viewModel: toolsViewModel)
+                        }
                     }
-                }
-                if toolsViewModel.isMultimeterActive {
-                    MultimeterToolView(viewModel: toolsViewModel)
+                    if toolsViewModel.isMultimeterActive {
+                        MultimeterToolView(viewModel: toolsViewModel)
+                    }
+                    //            if toolsViewModel.activeToolID == "multimeter" {
+                    //                MultimeterToolView()
+                    //            } else {
+                    //                Text("Tool: \(toolsViewModel.activeToolID ?? "nil")")
+                    //            }
                 }
             }
         }

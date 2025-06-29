@@ -10,7 +10,6 @@ import RealityKit
 protocol Level {
     var id: Int { get }
     var model: Model { get set }
-
     func setupLevel(in arView: ARView, with anchorTransform: Transform, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel)
     func update(deltaTime: Double, arViewModel: ARViewModel, toolsViewModel: ToolsViewModel)
 

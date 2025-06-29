@@ -72,6 +72,8 @@ struct DialogueView: View {
 //                print("current index on mainview: \(currentIndexDialogue)")
 //                if currentIndexDialogue == 2 { showDialogue = false }
 //                if currentIndexDialogue == 3 { showDialogue = false }
+                print("Tapped. Current index: \(viewModel.currentIndex)")
+                    viewModel.nextSlide()
             }
         }
     }
