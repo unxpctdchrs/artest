@@ -14,10 +14,11 @@ struct ContentView : View {
     
     @State var showbuttonstate = true
     
-    @State private var currentStep: AppStep = .arExperience
+    @State private var currentStep: AppStep = .onboarding
     @State private var showControls = true
     @State private var showChecklist = false
     @State private var showGuide = false
+    @State private var showReceipt = false
     
     init() {
         let gameManager = GameManager()
@@ -53,15 +54,28 @@ struct ContentView : View {
                 }
                 
                 if showChecklist {
-                    ChecklistView {
-                        showChecklist = false
-                    }
+                    ChecklistView(
+                        onDismiss: {
+                            showChecklist = false
+                        },
+                        onShowReceipt: {
+                            showChecklist = false
+                            showReceipt = true
+                        }
+                    )
                     .transition(.scale)
                 }
                 
                 if showGuide {
                     GuideView {
                         showGuide = false
+                    }
+                    .transition(.scale)
+                }
+                
+                if showReceipt {
+                    ReceiptView {
+                        showReceipt = false
                     }
                     .transition(.scale)
                 }
@@ -113,6 +127,18 @@ struct ContentView : View {
             }
         }
         .onChange(of: showChecklist) { oldValue, newValue in
+            if !oldValue {
+                toolsViewModel.isMultimeterActive = false
+                toolsViewModel.isThermalGlassActive = false
+                toolsViewModel.showbuttonstate = false
+            } else {
+                if !arViewModel.objectIsPlaced {
+                    toolsViewModel.showbuttonstate = true
+                }
+            }
+        }
+        
+        .onChange(of: showReceipt) { oldValue, newValue in
             if !oldValue {
                 toolsViewModel.isMultimeterActive = false
                 toolsViewModel.isThermalGlassActive = false

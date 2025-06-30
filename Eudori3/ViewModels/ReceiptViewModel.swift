@@ -8,5 +8,5 @@
 import Foundation
 
 class ReceiptViewModel {
-    
+    @Published var showReceipt: Bool = false
 }

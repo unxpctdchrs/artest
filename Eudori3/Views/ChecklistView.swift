@@ -9,9 +9,12 @@ import SwiftUI
 
 struct ChecklistView: View {
     var onDismiss: () -> Void
+    var onShowReceipt: () -> Void
+    
     @State private var selectedVoltage: String? = nil
     @State private var selectedPolarity: String? = nil
     @State private var selectedCapacitance: String? = nil
+    @State private var showReceipt = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -51,6 +54,7 @@ struct ChecklistView: View {
                         print("Polaritas: \(selectedPolarity ?? "-")")
                         print("Kapasitansi: \(selectedCapacitance ?? "-")")
                         onDismiss()
+                        onShowReceipt()
                     }
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -121,6 +125,6 @@ struct ChecklistView: View {
     }
 }
 
-#Preview {
-    ChecklistView{}
-}
+//#Preview {
+//    ChecklistView{}
+//}
